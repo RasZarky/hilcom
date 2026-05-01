@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import '../providers/home_provider.dart';
 import '../widgets/category_card.dart';
 import '../widgets/product_card.dart';
@@ -11,7 +12,7 @@ import '../widgets/layout/mobile_app_bar.dart';
 import '../widgets/layout/mobile_drawer.dart';
 import '../widgets/layout/footer.dart';
 import '../widgets/layout/bottom_banner.dart';
-import '../../../../core/theme/app_colors.dart';
+import 'package:hilcom/core/theme/app_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -302,14 +303,14 @@ class HomePage extends StatelessWidget {
           if (isMobile) {
             return Column(
               children: provider.listProducts.entries
-                  .map((e) => _buildSmallProductList(e.key, e.value))
+                  .map((e) => _buildSmallProductList(context, e.key, e.value))
                   .toList(),
             );
           }
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: provider.listProducts.entries
-                .map((e) => Expanded(child: _buildSmallProductList(e.key, e.value)))
+                .map((e) => Expanded(child: _buildSmallProductList(context, e.key, e.value)))
                 .toList(),
           );
         },
@@ -317,7 +318,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSmallProductList(String title, List<dynamic> products) {
+  Widget _buildSmallProductList(BuildContext context, String title, List<dynamic> products) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -331,44 +332,47 @@ class HomePage extends StatelessWidget {
           const SizedBox(height: 10),
           const Divider(thickness: 2, color: AppColors.primaryLight),
           const SizedBox(height: 20),
-          ...products.map((p) => Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(p.image,
-                          width: 80, height: 80, fit: BoxFit.cover),
-                    ),
-                    const SizedBox(width: 15),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(p.title,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Icon(Icons.star,
-                                  color: AppColors.secondary, size: 14),
-                              Text(' (${p.rating})',
-                                  style: const TextStyle(fontSize: 12)),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Text('\$${p.price}',
-                              style: const TextStyle(
-                                  color: AppColors.primary,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16)),
-                        ],
+          ...products.map((p) => InkWell(
+                onTap: () => context.push('/product', extra: p),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(p.image,
+                            width: 80, height: 80, fit: BoxFit.cover),
                       ),
-                    ),
-                  ],
+                      const SizedBox(width: 15),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(p.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style:
+                                    const TextStyle(fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 5),
+                            Row(
+                              children: [
+                                const Icon(Icons.star,
+                                    color: AppColors.secondary, size: 14),
+                                Text(' (${p.rating})',
+                                    style: const TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Text('\$${p.price}',
+                                style: const TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )),
         ],
