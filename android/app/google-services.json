@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "203378684771",
+    "project_id": "hilcom-acf15",
+    "storage_bucket": "hilcom-acf15.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203378684771:android:6a6f63a7dcb29f84f91956",
+        "android_client_info": {
+          "package_name": "com.example.hilcom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3qsEjSAwsj0r1Ni11mkkNKiogZblUEA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,39 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "hilcom-acf15",
+          "appId": "1:203378684771:android:6a6f63a7dcb29f84f91956",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "hilcom-acf15",
+          "configurations": {
+            "android": "1:203378684771:android:6a6f63a7dcb29f84f91956",
+            "ios": "1:203378684771:ios:56810005be51c56bf91956",
+            "macos": "1:203378684771:ios:56810005be51c56bf91956",
+            "web": "1:203378684771:web:43ea7df2cf6ed39cf91956",
+            "windows": "1:203378684771:web:05b48925eea9e735f91956"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

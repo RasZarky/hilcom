@@ -30,7 +30,6 @@ class HomePage extends StatelessWidget {
             // Add spacing for the floating app bar
             SizedBox(height: isMobile ? 110 : 120),
             if (!isMobile) const WebSecondaryHeader(currentPage: 'Home'),
-            _buildHeroSection(context, isMobile),
             _buildCategorySection(context, isMobile),
             _buildProductSection(context, isMobile),
             _buildDailyBestSells(context, isMobile),
@@ -68,13 +67,13 @@ class HomePage extends StatelessWidget {
               child: Opacity(
                 opacity: 0.9,
                 child: Image.network(
-                  'https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=800&auto=format&fit=crop',
+                  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop',
                   height: isMobile ? 220 : 500,
                   fit: BoxFit.contain,
                 ),
               ),
             ),
-            
+
             // Content layer
             Padding(
               padding: EdgeInsets.symmetric(
@@ -102,10 +101,10 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Main Heading
                   Text(
-                    'Fresh Vegetables\nBig discount',
+                    'Everything You Need,\nDelivered to You',
                     style: Theme.of(context).textTheme.displayLarge?.copyWith(
                           fontSize: isMobile ? 32 : 72,
                           height: 1.1,
@@ -114,16 +113,16 @@ class HomePage extends StatelessWidget {
                         ),
                   ),
                   const SizedBox(height: 20),
-                  
+
                   // Subheading
                   Text(
-                    'Save up to 50% off on your first order',
+                    'Best deals on Motors, TVs, Furniture & More',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontSize: isMobile ? 16 : 28,
                           color: AppColors.textBody,
                         ),
                   ),
-                  
+
                   // Desktop Subscribe Bar
                   if (!isMobile) ...[
                     const SizedBox(height: 50),
@@ -210,11 +209,11 @@ class HomePage extends StatelessWidget {
                   style: Theme.of(context).textTheme.displayMedium),
               const Spacer(),
               if (!isMobile) ...[
-                const Text('Cake & Milk'),
+                const Text('Motors'),
                 const SizedBox(width: 15),
-                const Text('Coffes & Teas'),
+                const Text('Electronics'),
                 const SizedBox(width: 15),
-                const Text('Pet Foods'),
+                const Text('Furniture'),
               ],
             ],
           ),
@@ -254,9 +253,9 @@ class HomePage extends StatelessWidget {
               if (!isMobile) ...[
                 const Text('All', style: TextStyle(color: AppColors.primary)),
                 const SizedBox(width: 15),
-                const Text('Milks & Dairies'),
+                const Text('Motors'),
                 const SizedBox(width: 15),
-                const Text('Coffes & Teas'),
+                const Text('Electronics'),
               ],
             ],
           ),
@@ -305,13 +304,13 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                     image: const DecorationImage(
                       image: NetworkImage(
-                          'https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=300&auto=format&fit=crop'),
+                          'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=300&auto=format&fit=crop'),
                       fit: BoxFit.cover,
                     ),
                   ),
                   padding: const EdgeInsets.all(30),
                   child: const Text(
-                    'Bring nature\ninto your\nhome',
+                    'Upgrade Your\nLifestyle\nToday',
                     style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
