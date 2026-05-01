@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../providers/home_provider.dart';
 import '../widgets/category_card.dart';
 import '../widgets/product_card.dart';
-import '../widgets/banner_card.dart';
 import '../widgets/deal_card.dart';
 import '../widgets/layout/web_header.dart';
 import '../widgets/layout/web_secondary_header.dart';
