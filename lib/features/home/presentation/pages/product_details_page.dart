@@ -107,7 +107,7 @@ class ProductDetailsPage extends StatelessWidget {
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        Container(height: 2, width: 80, color: const Color(0xFF3BB77E).withOpacity(0.3)),
+        Container(height: 2, width: 80, color: const Color(0xFF3BB77E).withValues(alpha: 0.3)),
         const SizedBox(height: 30),
         isMobile
             ? SizedBox(

@@ -33,27 +33,22 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                         GestureDetector(
                           onTap: () => context.go('/'),
                           child: Hero(
-                            tag: 'logo',
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  'assets/images/logo.png',
-                                  height: 28,
-                                  fit: BoxFit.contain,
-                                ),
-                                const SizedBox(width: 8),
-                                const Text(
-                                  'Hilcom',
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                    letterSpacing: -0.5,
-                                  ),
-                                ),
-                              ],
+                            tag: 'logo-img',
+                            child: Image.asset(
+                              'assets/images/logo.png',
+                              height: 28,
+                              fit: BoxFit.contain,
                             ),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Text(
+                          'Hilcom',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            letterSpacing: -0.5,
                           ),
                         ),
                         const Spacer(),
@@ -86,7 +81,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -97,10 +92,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha: 0.7),
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.4),
+                  color: Colors.white.withValues(alpha: 0.4),
                   width: 1.5,
                 ),
               ),
@@ -119,7 +114,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
         borderRadius: BorderRadius.circular(27),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -131,10 +126,10 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(27),
               border: Border.all(
-                color: Colors.white.withOpacity(0.4),
+                color: Colors.white.withValues(alpha: 0.4),
                 width: 1.5,
               ),
             ),

@@ -18,7 +18,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
@@ -32,10 +32,10 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
               height: 80,
               padding: const EdgeInsets.symmetric(horizontal: 30),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withValues(alpha: 0.7),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.white.withOpacity(0.5),
+                  color: Colors.white.withValues(alpha: 0.5),
                   width: 1.5,
                 ),
               ),
@@ -43,27 +43,27 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   GestureDetector(
                     onTap: () => context.go('/'),
-                    child: Row(
-                      children: [
-                        Hero(
-                          tag: 'logo-img',
-                          child: Image.asset(
+                    child: Hero(
+                      tag: 'logo-img',
+                      child: Row(
+                        children: [
+                          Image.asset(
                             'assets/images/logo.png',
                             height: 40,
                             fit: BoxFit.contain,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        const Text(
-                          'Hilcom',
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: -0.5,
+                          const SizedBox(width: 12),
+                          const Text(
+                            'Hilcom',
+                            style: TextStyle(
+                              color: AppColors.primary,
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: -0.5,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(width: 40),
@@ -71,9 +71,9 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                     child: Container(
                       height: 45,
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
                       ),
                       child: Row(
                         children: [
@@ -88,7 +88,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                             width: 1,
                             indent: 10,
                             endIndent: 10,
-                            color: AppColors.primary.withOpacity(0.2),
+                            color: AppColors.primary.withValues(alpha: 0.2),
                           ),
                           const Expanded(
                             child: TextField(
@@ -100,7 +100,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                               ),
                             ),
                           ),
-                          Icon(Icons.search, color: AppColors.primary.withOpacity(0.7)),
+                          Icon(Icons.search, color: AppColors.primary.withValues(alpha: 0.7)),
                           const SizedBox(width: 15),
                         ],
                       ),

@@ -17,7 +17,7 @@ class CategoryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Color(int.parse('0xFF${category.color}')),
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: AppColors.border.withOpacity(0.5)),
+        border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

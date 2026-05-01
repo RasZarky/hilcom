@@ -28,11 +28,11 @@ class DealCard extends StatelessWidget {
                 width: 320,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
-                  color: AppColors.border.withOpacity(0.3),
+                  color: AppColors.border.withValues(alpha: 0.3),
                   child: const Center(child: CircularProgressIndicator()),
                 ),
                 errorWidget: (context, url, error) => Container(
-                  color: AppColors.border.withOpacity(0.3),
+                  color: AppColors.border.withValues(alpha: 0.3),
                   child: const Icon(Icons.image_not_supported_outlined, size: 50),
                 ),
               ),
@@ -49,7 +49,7 @@ class DealCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
