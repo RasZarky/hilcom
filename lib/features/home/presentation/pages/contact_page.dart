@@ -20,11 +20,13 @@ class ContactPage extends StatelessWidget {
     final isMobile = MediaQuery.of(context).size.width < 900;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: isMobile ? const MobileAppBar() : const WebHeader(),
       drawer: isMobile ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: isMobile ? 90 : 110),
             if (!isMobile) const WebSecondaryHeader(currentPage: 'Contact'),
             Breadcrumb(currentPage: 'Contact', isMobile: isMobile),
             ContactHeader(isMobile: isMobile),

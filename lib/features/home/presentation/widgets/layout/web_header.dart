@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
@@ -6,76 +7,158 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
   const WebHeader({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize => const Size.fromHeight(100); // Increased height for floating effect
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 50),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(bottom: BorderSide(color: AppColors.border)),
-      ),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () => context.go('/'),
-            child: const Text('Hilcom',
-                style: TextStyle(
-                    color: AppColors.primary,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold)),
-          ),
-          const SizedBox(width: 40),
-          Expanded(
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
             child: Container(
-              height: 45,
+              height: 80,
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.primary),
-                borderRadius: BorderRadius.circular(5),
+                color: Colors.white.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.5),
+                  width: 1.5,
+                ),
               ),
-              child: const Row(
+              child: Row(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    child: Text('All Categories',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                  GestureDetector(
+                    onTap: () => context.go('/'),
+                    child: Row(
+                      children: [
+                        Hero(
+                          tag: 'logo-img',
+                          child: Image.asset(
+                            'assets/images/logo.png',
+                            height: 40,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Hilcom',
+                          style: TextStyle(
+                            color: AppColors.primary,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  VerticalDivider(width: 1),
+                  const SizedBox(width: 40),
                   Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search for items...',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    child: Container(
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+                      ),
+                      child: Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            child: Text(
+                              'All Categories',
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                            ),
+                          ),
+                          VerticalDivider(
+                            width: 1,
+                            indent: 10,
+                            endIndent: 10,
+                            color: AppColors.primary.withOpacity(0.2),
+                          ),
+                          const Expanded(
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Search for items...',
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                                hintStyle: TextStyle(fontSize: 13),
+                              ),
+                            ),
+                          ),
+                          Icon(Icons.search, color: AppColors.primary.withOpacity(0.7)),
+                          const SizedBox(width: 15),
+                        ],
                       ),
                     ),
                   ),
-                  Icon(Icons.search, color: AppColors.textBody),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 40),
+                  _buildHeaderAction(Icons.refresh_rounded, 'Compare'),
+                  _buildHeaderAction(Icons.favorite_outline_rounded, 'Wishlist'),
+                  _buildHeaderAction(Icons.shopping_cart_outlined, 'Cart', badge: '3'),
+                  _buildHeaderAction(Icons.person_outline_rounded, 'Account'),
                 ],
               ),
             ),
           ),
-          const SizedBox(width: 40),
-          _buildHeaderAction(Icons.refresh, 'Compare'),
-          _buildHeaderAction(Icons.favorite_border, 'Wishlist'),
-          _buildHeaderAction(Icons.shopping_cart_outlined, 'Cart'),
-          _buildHeaderAction(Icons.person_outline, 'Account'),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildHeaderAction(IconData icon, String label) {
+  Widget _buildHeaderAction(IconData icon, String label, {String? badge}) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20),
-      child: Row(
-        children: [
-          Icon(icon, size: 24, color: AppColors.heading),
-          const SizedBox(width: 5),
-          Text(label, style: const TextStyle(color: AppColors.heading)),
-        ],
+      padding: const EdgeInsets.only(left: 25),
+      child: InkWell(
+        onTap: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Icon(icon, size: 24, color: AppColors.heading),
+                if (badge != null)
+                  Positioned(
+                    top: -5,
+                    right: -5,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                      child: Text(
+                        badge,
+                        style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: const TextStyle(color: AppColors.heading, fontSize: 12, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
       ),
     );
   }

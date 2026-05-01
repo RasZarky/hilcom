@@ -23,11 +23,14 @@ class ProductDetailsPage extends StatelessWidget {
     final isMobile = MediaQuery.of(context).size.width < 900;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: isMobile ? const MobileAppBar() : const WebHeader(),
       drawer: isMobile ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Add spacing for the floating app bar
+            SizedBox(height: isMobile ? 110 : 120),
             if (!isMobile) const WebSecondaryHeader(currentPage: 'Shop'),
             Breadcrumb(currentPage: product.title, isMobile: isMobile),
             Padding(
