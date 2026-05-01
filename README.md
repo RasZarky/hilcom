@@ -1,6 +1,6 @@
-# Hilcom - Nest E-commerce Replica
+# Hilcom - Flutter E-commerce
 
-A high-fidelity, responsive e-commerce dashboard built with Flutter, following Clean Architecture principles. This project is a replica of the "Nest" e-commerce template, optimized for both Web and Mobile.
+A high-fidelity, responsive e-commerce dashboard built with Flutter, following Clean Architecture principles. This project is a high-quality e-commerce platform, optimized for both Web and Mobile.
 
 ## 🚀 Features
 
@@ -8,7 +8,7 @@ A high-fidelity, responsive e-commerce dashboard built with Flutter, following C
 -   **Responsive Design**: Seamlessly transitions between Mobile and Web interfaces using custom breakpoints.
 -   **State Management**: Powered by `Provider` for efficient and scalable state handling.
 -   **Navigation**: Implemented using `GoRouter` for declarative routing.
--   **Theming**: Custom theme using `Quicksand` for headings and `Lato` for body text, matching the Nest branding.
+-   **Theming**: Custom theme using `Quicksand` for headings and `Lato` for body text, matching the Hilcom branding.
 -   **Dynamic UI**: 
     -   Featured Categories scrollable list.
     -   Popular Products grid with badges and hover-ready layouts.
