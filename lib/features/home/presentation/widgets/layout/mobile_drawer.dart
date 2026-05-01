@@ -66,6 +66,22 @@ class MobileDrawer extends StatelessWidget {
                     ),
                     _buildMenuItem(
                       context,
+                      icon: Icons.info_outline_rounded,
+                      activeIcon: Icons.info_rounded,
+                      label: 'About Us',
+                      route: '/about',
+                      isActive: currentPath == '/about',
+                    ),
+                    _buildMenuItem(
+                      context,
+                      icon: Icons.contact_support_outlined,
+                      activeIcon: Icons.contact_support_rounded,
+                      label: 'Contact',
+                      route: '/contact',
+                      isActive: currentPath == '/contact',
+                    ),
+                    _buildMenuItem(
+                      context,
                       icon: Icons.local_offer_outlined,
                       activeIcon: Icons.local_offer_rounded,
                       label: 'Hot Deals',
