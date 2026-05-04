@@ -80,9 +80,9 @@ class DealCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Text('\$${product.price}', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
+                              Text('GH₵ ${product.price}', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
                               const SizedBox(width: 5),
-                              Text('\$${product.oldPrice}', style: const TextStyle(decoration: TextDecoration.lineThrough, color: AppColors.textBody, fontSize: 14)),
+                              Text('GH₵ ${product.oldPrice}', style: const TextStyle(decoration: TextDecoration.lineThrough, color: AppColors.textBody, fontSize: 14)),
                             ],
                           ),
                           ElevatedButton(

@@ -63,7 +63,7 @@ class ProductInfoSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '\$${product.price}',
+              'GH₵ ${product.price}',
               style: const TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class ProductInfoSection extends StatelessWidget {
                           color: AppColors.badgeHot,
                           fontWeight: FontWeight.bold)),
                   Text(
-                    '\$${product.oldPrice}',
+                    'GH₵ ${product.oldPrice}',
                     style: const TextStyle(
                       fontSize: 24,
                       color: AppColors.textBody,

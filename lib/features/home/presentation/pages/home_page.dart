@@ -198,43 +198,63 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildCategorySection(BuildContext context, bool isMobile) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 50),
-          child: Row(
-            children: [
-              Text('Featured Categories',
-                  style: Theme.of(context).textTheme.displayMedium),
-              const Spacer(),
-              if (!isMobile) ...[
-                const Text('Motors'),
-                const SizedBox(width: 15),
-                const Text('Electronics'),
-                const SizedBox(width: 15),
-                const Text('Furniture'),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 20 : 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 50),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'EXPLORE',
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.primary,
+                        letterSpacing: 2.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'Featured Categories',
+                      style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        fontSize: isMobile ? 28 : 36,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: -1.0,
+                        color: AppColors.heading,
+                      ),
+                    ),
+                  ],
+                ),
+                const Spacer(),
               ],
-            ],
+            ),
           ),
-        ),
-        const SizedBox(height: 20),
-        SizedBox(
-          height: 180,
-          child: Consumer<HomeProvider>(
-            builder: (context, provider, _) {
-              return ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 50),
-                scrollDirection: Axis.horizontal,
-                itemCount: provider.categories.length,
-                itemBuilder: (context, index) {
-                  return CategoryCard(category: provider.categories[index]);
-                },
-              );
-            },
+          const SizedBox(height: 40),
+          SizedBox(
+            height: 220,
+            child: Consumer<HomeProvider>(
+              builder: (context, provider, _) {
+                return ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 50),
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: provider.categories.length,
+                  itemBuilder: (context, index) {
+                    return CategoryCard(category: provider.categories[index]);
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -327,8 +347,12 @@ class HomePage extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: provider.dealsOfTheDay.length,
                         itemBuilder: (context, index) {
-                          return ProductCard(
-                              product: provider.dealsOfTheDay[index]);
+                          return Container(
+                            width: isMobile ? 220 : 280,
+                            margin: const EdgeInsets.only(right: 15),
+                            child: ProductCard(
+                                product: provider.dealsOfTheDay[index]),
+                          );
                         },
                       );
                     },
@@ -440,7 +464,7 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 5),
-                            Text('\$${p.price}',
+                            Text('GH₵ ${p.price}',
                                 style: const TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.bold,
@@ -462,7 +486,7 @@ class HomePage extends StatelessWidget {
       {
         'icon': Icons.sell_outlined,
         'title': 'Best prices & offers',
-        'subtitle': 'Orders \$50 or more'
+        'subtitle': 'Orders GH₵ 50 or more'
       },
       {
         'icon': Icons.local_shipping_outlined,
@@ -475,36 +499,45 @@ class HomePage extends StatelessWidget {
         'subtitle': 'When you sign up'
       },
       {
-        'icon': Icons.replay_outlined,
-        'title': 'Wide assortment',
-        'subtitle': 'Mega Discounts'
-      },
-      {
-        'icon': Icons.headset_mic_outlined,
+        'icon': Icons.refresh_outlined,
         'title': 'Easy returns',
         'subtitle': 'Within 30 days'
       },
+      {
+        'icon': Icons.headset_mic_outlined,
+        'title': 'Support 24/7',
+        'subtitle': 'Shop with confidence'
+      },
     ];
 
-    return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: isMobile ? 15 : 50, vertical: 40),
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 15 : 50,
+        vertical: 40,
+      ),
       child: isMobile
-          ? Column(children: features.map((f) => _buildFeatureItem(f)).toList())
-          : Row(
+          ? Column(
               children: features
-                  .map((f) => Expanded(child: _buildFeatureItem(f)))
-                  .toList()),
+                  .map((f) => _buildFeatureItem(f, true))
+                  .toList(),
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: features
+                  .map((f) => Expanded(child: _buildFeatureItem(f, false)))
+                  .toList(),
+            ),
     );
   }
 
-  Widget _buildFeatureItem(Map<String, dynamic> feature) {
+  Widget _buildFeatureItem(Map<String, dynamic> feature, bool isMobile) {
     return Container(
-      margin: const EdgeInsets.all(10),
+      margin: EdgeInsets.all(isMobile ? 10 : 5),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-          color: const Color(0xFFF4F6FA),
-          borderRadius: BorderRadius.circular(10)),
+        color: const Color(0xFFF8F9FA),
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Row(
         children: [
           Icon(feature['icon'] as IconData, size: 40, color: AppColors.primary),
@@ -513,12 +546,21 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(feature['title'] as String,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(feature['subtitle'] as String,
-                    style:
-                        const TextStyle(color: AppColors.textBody, fontSize: 12)),
+                Text(
+                  feature['title'] as String,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: AppColors.heading,
+                  ),
+                ),
+                Text(
+                  feature['subtitle'] as String,
+                  style: const TextStyle(
+                    color: AppColors.textBody,
+                    fontSize: 13,
+                  ),
+                ),
               ],
             ),
           ),

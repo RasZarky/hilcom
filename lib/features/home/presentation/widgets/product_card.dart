@@ -23,7 +23,7 @@ class ProductCard extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -31,18 +31,20 @@ class ProductCard extends StatelessWidget {
                     child: Center(
                       child: CachedNetworkImage(
                         imageUrl: product.image,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.contain,
                         placeholder: (context, url) => const Center(child: CircularProgressIndicator(strokeWidth: 2)),
-                        errorWidget: (context, url, error) => const Icon(Icons.image_not_supported_outlined, size: 50, color: AppColors.border),
+                        errorWidget: (context, url, error) => const Icon(Icons.image_not_supported_outlined, size: 40, color: AppColors.border),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Text(
                     product.category,
-                    style: Theme.of(context).textTheme.bodySmall,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 10),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 4),
                   Text(
                     product.title,
                     maxLines: 2,
@@ -50,54 +52,79 @@ class ProductCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.heading,
+                      fontSize: 13,
                     ),
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.star, color: AppColors.secondary, size: 16),
-                      Text(' (${product.rating})', style: Theme.of(context).textTheme.bodySmall),
+                      const Icon(Icons.star, color: AppColors.secondary, size: 14),
+                      Expanded(
+                        child: Text(
+                          ' (${product.rating})',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
+                        ),
+                      ),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 4),
                   Text(
                     'By ${product.brand}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.primary),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.primary,
+                      fontSize: 11,
+                    ),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            '\$${product.price}',
-                            style: const TextStyle(
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                            ),
-                          ),
-                          if (product.oldPrice != null) ...[
-                            const SizedBox(width: 5),
-                            Text(
-                              '\$${product.oldPrice}',
-                              style: const TextStyle(
-                                color: AppColors.textBody,
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 14,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (product.oldPrice != null)
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  'GH₵ ${product.oldPrice}',
+                                  style: const TextStyle(
+                                    color: AppColors.textBody,
+                                    decoration: TextDecoration.lineThrough,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                              ),
+                            FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'GH₵ ${product.price}',
+                                style: const TextStyle(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
                               ),
                             ),
                           ],
-                        ],
+                        ),
                       ),
+                      const SizedBox(width: 4),
                       Container(
-                        padding: const EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
                           color: AppColors.primaryLight,
-                          borderRadius: BorderRadius.circular(5),
+                          borderRadius: BorderRadius.circular(4),
                         ),
-                        child: const Icon(Icons.add, color: AppColors.primary, size: 20),
+                        child: const Icon(Icons.add, color: AppColors.primary, size: 18),
                       ),
                     ],
                   ),
@@ -109,17 +136,17 @@ class ProductCard extends StatelessWidget {
                 top: 0,
                 left: 0,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: _getBadgeColor(product.badge!),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(15),
+                      bottomRight: Radius.circular(8),
                     ),
                   ),
                   child: Text(
                     product.badge!,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),

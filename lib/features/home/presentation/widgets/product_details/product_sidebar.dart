@@ -23,8 +23,8 @@ class ProductSidebar extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              Text('From: \$0'),
-              Text('To: \$2000'),
+              Text('From: GH₵ 0'),
+              Text('To: GH₵ 2000'),
             ],
           ),
           const SizedBox(height: 20),
@@ -147,7 +147,7 @@ class ProductSidebar extends StatelessWidget {
                 Text(title,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: AppColors.primary)),
-                Text('\$$price',
+                Text('GH₵ $price',
                     style: const TextStyle(color: AppColors.textBody)),
                 Row(
                     children: const [
