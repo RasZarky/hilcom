@@ -70,7 +70,7 @@ class HomeProvider extends ChangeNotifier {
     ProductModel(
       title: 'Classic Leather King Bed Frame',
       category: 'Furniture',
-      image: 'https://images.unsplash.com/photo-1505693419148-403bb22b9f11?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400',
       rating: 4.8,
       brand: 'LuxLiving',
       price: 1299.00,
@@ -79,7 +79,7 @@ class HomeProvider extends ChangeNotifier {
     ProductModel(
       title: 'Bose Surround Sound System 700',
       category: 'Audio Systems',
-      image: 'https://images.unsplash.com/photo-1545016803-a63d001718e9?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400',
       rating: 4.9,
       brand: 'Bose',
       price: 799.00,
@@ -88,7 +88,7 @@ class HomeProvider extends ChangeNotifier {
     ProductModel(
       title: 'Yamaha YZF-R1 Superbike 2023',
       category: 'Motors',
-      image: 'https://images.unsplash.com/photo-1558381675-15a07304a9d0?auto=format&fit=crop&q=80&w=400',
+      image: 'https://images.unsplash.com/photo-1444491741275-3747c53c99b4?auto=format&fit=crop&q=80&w=800',
       rating: 5.0,
       brand: 'Yamaha',
       price: 17599.00,

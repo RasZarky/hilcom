@@ -377,11 +377,12 @@ class HomePage extends StatelessWidget {
               style: Theme.of(context).textTheme.displayMedium),
           const SizedBox(height: 30),
           SizedBox(
-            height: 400,
+            height: 450, // Increased height to prevent clipping
             child: Consumer<HomeProvider>(
               builder: (context, provider, _) {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
                   itemCount: provider.dealsOfTheDay.length,
                   itemBuilder: (context, index) {
                     return DealCard(product: provider.dealsOfTheDay[index]);

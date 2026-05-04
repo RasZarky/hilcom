@@ -28,12 +28,23 @@ class DealCard extends StatelessWidget {
                 width: 320,
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(
-                  color: AppColors.border.withValues(alpha: 0.3),
+                  width: 320,
+                  height: 400,
+                  color: AppColors.border.withOpacity(0.3),
                   child: const Center(child: CircularProgressIndicator()),
                 ),
                 errorWidget: (context, url, error) => Container(
-                  color: AppColors.border.withValues(alpha: 0.3),
-                  child: const Icon(Icons.image_not_supported_outlined, size: 50),
+                  width: 320,
+                  height: 400,
+                  color: AppColors.border.withOpacity(0.1),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.image_not_supported_outlined, size: 50, color: AppColors.textBody),
+                      SizedBox(height: 10),
+                      Text('Image not available', style: TextStyle(color: AppColors.textBody)),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -49,7 +60,7 @@ class DealCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.05),
+                        color: Colors.black.withOpacity(0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -81,8 +92,10 @@ class DealCard extends StatelessWidget {
                           Row(
                             children: [
                               Text('GH₵ ${product.price}', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
-                              const SizedBox(width: 5),
-                              Text('GH₵ ${product.oldPrice}', style: const TextStyle(decoration: TextDecoration.lineThrough, color: AppColors.textBody, fontSize: 14)),
+                              if (product.oldPrice != null) ...[
+                                const SizedBox(width: 5),
+                                Text('GH₵ ${product.oldPrice}', style: const TextStyle(decoration: TextDecoration.lineThrough, color: AppColors.textBody, fontSize: 14)),
+                              ],
                             ],
                           ),
                           ElevatedButton(
