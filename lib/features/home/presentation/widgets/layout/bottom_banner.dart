@@ -22,7 +22,7 @@ class BottomBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -47,9 +47,9 @@ class BottomBanner extends StatelessWidget {
                     begin: isMobile ? Alignment.topCenter : Alignment.centerLeft,
                     end: isMobile ? Alignment.bottomCenter : Alignment.centerRight,
                     colors: [
-                      AppColors.heading.withOpacity(0.95),
-                      AppColors.heading.withOpacity(0.8),
-                      AppColors.heading.withOpacity(0.4),
+                      AppColors.heading.withValues(alpha: 0.95),
+                      AppColors.heading.withValues(alpha: 0.8),
+                      AppColors.heading.withValues(alpha: 0.4),
                     ],
                   ),
                 ),
@@ -66,10 +66,10 @@ class BottomBanner extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.15),
+                      color: AppColors.primary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: AppColors.primary.withOpacity(0.5),
+                        color: AppColors.primary.withValues(alpha: 0.5),
                         width: 1,
                       ),
                     ),
@@ -103,7 +103,7 @@ class BottomBanner extends StatelessWidget {
                       'Have premium items? Submit them for evaluation. We buy directly from you and handle the rest.',
                       style: TextStyle(
                         fontSize: isMobile ? 14 : 16,
-                        color: Colors.white.withOpacity(0.85),
+                        color: Colors.white.withValues(alpha: 0.85),
                         height: 1.5,
                       ),
                     ),
