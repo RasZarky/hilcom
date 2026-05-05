@@ -44,159 +44,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroSection(BuildContext context, bool isMobile) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: isMobile ? 15 : 50,
-        vertical: isMobile ? 10 : 30,
-      ),
-      height: isMobile ? 250 : 500,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF2FCE4), // Soft pastel green background
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Stack(
-          children: [
-            // Decorative background image/illustration on the right
-            Positioned(
-              right: isMobile ? -60 : 0,
-              bottom: 0,
-              child: Opacity(
-                opacity: 0.9,
-                child: Image.network(
-                  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop',
-                  height: isMobile ? 220 : 500,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-
-            // Content layer
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: isMobile ? 20 : 80,
-                vertical: 20,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Exclusive Tag
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondary.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Text(
-                      '🔥 Exclusive Offer - 2024',
-                      style: TextStyle(
-                        color: Color(0xFFB58E1D),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Main Heading
-                  Text(
-                    'Everything You Need,\nDelivered to You',
-                    style: Theme.of(context).textTheme.displayLarge?.copyWith(
-                          fontSize: isMobile ? 32 : 72,
-                          height: 1.1,
-                          color: AppColors.heading,
-                          fontWeight: FontWeight.w900,
-                        ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  // Subheading
-                  Text(
-                    'Best deals on Motors, TVs, Furniture & More',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          fontSize: isMobile ? 16 : 28,
-                          color: AppColors.textBody,
-                        ),
-                  ),
-
-                  // Desktop Subscribe Bar
-                  if (!isMobile) ...[
-                    const SizedBox(height: 50),
-                    _buildHeroSubscribeBar(),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeroSubscribeBar() {
-    return Container(
-      width: 450,
-      height: 64,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(32),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Icon(Icons.send_outlined, color: AppColors.textBody, size: 22),
-          ),
-          const Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Your email address',
-                border: InputBorder.none,
-                hintStyle: TextStyle(color: AppColors.textBody, fontSize: 15),
-              ),
-            ),
-          ),
-          Container(
-            height: 64,
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(32),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: const Text(
-              'Subscribe',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-                letterSpacing: 0.5,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildCategorySection(BuildContext context, bool isMobile) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: isMobile ? 20 : 40),
@@ -465,11 +312,41 @@ class HomePage extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 5),
-                            Text('GH₵ ${p.price}',
-                                style: const TextStyle(
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16)),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('GH₵ ${p.price.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                        color: AppColors.primary,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
+                                InkWell(
+                                  onTap: () {
+                                    context.read<HomeProvider>().addToCart(p);
+                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('${p.title} added to cart'),
+                                        duration: const Duration(seconds: 3),
+                                        showCloseIcon: true,
+                                        action: SnackBarAction(
+                                          label: 'View Cart',
+                                          onPressed: () => context.push('/cart'),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(4),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryLight,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Icon(Icons.add, color: AppColors.primary, size: 18),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import '../../domain/models/product_model.dart';
+import '../providers/home_provider.dart';
 
 class DealCard extends StatelessWidget {
   final ProductModel product;
@@ -30,13 +32,13 @@ class DealCard extends StatelessWidget {
                 placeholder: (context, url) => Container(
                   width: 320,
                   height: 400,
-                  color: AppColors.border.withOpacity(0.3),
+                  color: AppColors.border.withValues(alpha: 0.3),
                   child: const Center(child: CircularProgressIndicator()),
                 ),
                 errorWidget: (context, url, error) => Container(
                   width: 320,
                   height: 400,
-                  color: AppColors.border.withOpacity(0.1),
+                  color: AppColors.border.withValues(alpha: 0.1),
                   child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -60,7 +62,7 @@ class DealCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
+                        color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),
@@ -87,31 +89,58 @@ class DealCard extends StatelessWidget {
                       Text('By ${product.brand}', style: const TextStyle(color: AppColors.textBody, fontSize: 12)),
                       const SizedBox(height: 10),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Text('GH₵ ${product.price}', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
-                              if (product.oldPrice != null) ...[
-                                const SizedBox(width: 5),
-                                Text('GH₵ ${product.oldPrice}', style: const TextStyle(decoration: TextDecoration.lineThrough, color: AppColors.textBody, fontSize: 14)),
-                              ],
-                            ],
+                          Expanded(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('GH₵ ${product.price.toStringAsFixed(2)}', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 18)),
+                                  if (product.oldPrice != null) ...[
+                                    const SizedBox(width: 5),
+                                    Text('GH₵ ${product.oldPrice?.toStringAsFixed(2)}', style: const TextStyle(decoration: TextDecoration.lineThrough, color: AppColors.textBody, fontSize: 14)),
+                                  ],
+                                ],
+                              ),
+                            ),
                           ),
+                          const SizedBox(width: 8),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.read<HomeProvider>().addToCart(product);
+                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${product.title} added to cart'),
+                                  duration: const Duration(seconds: 3),
+                                  showCloseIcon: true,
+                                  action: SnackBarAction(
+                                    label: 'View Cart',
+                                    onPressed: () => context.push('/cart'),
+                                  ),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primaryLight,
                               foregroundColor: AppColors.primary,
                               elevation: 0,
-                              padding: const EdgeInsets.symmetric(horizontal: 15),
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              minimumSize: Size.zero,
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Row(
-                              children: [
-                                Icon(Icons.shopping_cart_outlined, size: 16),
-                                SizedBox(width: 5),
-                                Text('Add'),
-                              ],
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.shopping_cart_outlined, size: 16),
+                                  SizedBox(width: 4),
+                                  Text('Add', style: TextStyle(fontSize: 13, fontWeight: FontWeight.bold)),
+                                ],
+                              ),
                             ),
                           ),
                         ],

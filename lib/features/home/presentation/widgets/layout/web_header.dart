@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
+import '../../providers/home_provider.dart';
 
 class WebHeader extends StatelessWidget implements PreferredSizeWidget {
   const WebHeader({super.key});
@@ -108,7 +110,16 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   const SizedBox(width: 40),
                   _buildHeaderAction(Icons.favorite_outline_rounded, 'Wishlist', onTap: () => context.go('/wishlist')),
-                  _buildHeaderAction(Icons.shopping_cart_outlined, 'Cart', badge: '3', onTap: () => context.go('/cart')),
+                  Consumer<HomeProvider>(
+                    builder: (context, provider, _) {
+                      return _buildHeaderAction(
+                        Icons.shopping_cart_outlined,
+                        'Cart',
+                        badge: provider.cartCount > 0 ? '${provider.cartCount}' : null,
+                        onTap: () => context.go('/cart'),
+                      );
+                    },
+                  ),
                   _buildHeaderAction(Icons.inventory_2_outlined, 'My Products', onTap: () => context.go('/my-products')),
                   _buildHeaderAction(Icons.person_outline_rounded, 'Account'),
                 ],

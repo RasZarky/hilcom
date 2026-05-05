@@ -1,8 +1,46 @@
 import 'package:flutter/material.dart';
 import '../../domain/models/category_model.dart';
 import '../../domain/models/product_model.dart';
+import '../../domain/models/cart_item_model.dart';
 
 class HomeProvider extends ChangeNotifier {
+  final List<CartItemModel> _cartItems = [];
+
+  List<CartItemModel> get cartItems => _cartItems;
+
+  double get cartTotal => _cartItems.fold(0, (sum, item) => sum + item.total);
+
+  int get cartCount => _cartItems.fold(0, (sum, item) => sum + item.quantity);
+
+  void addToCart(ProductModel product, {int quantity = 1}) {
+    final existingIndex = _cartItems.indexWhere((item) => item.product.title == product.title);
+    if (existingIndex >= 0) {
+      _cartItems[existingIndex].quantity += quantity;
+    } else {
+      _cartItems.add(CartItemModel(product: product, quantity: quantity));
+    }
+    notifyListeners();
+  }
+
+  void removeFromCart(CartItemModel item) {
+    _cartItems.remove(item);
+    notifyListeners();
+  }
+
+  void updateQuantity(CartItemModel item, int quantity) {
+    if (quantity <= 0) {
+      removeFromCart(item);
+    } else {
+      item.quantity = quantity;
+      notifyListeners();
+    }
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+
   List<CategoryModel> get categories => [
     CategoryModel(title: 'Motors & Cars', image: 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png', itemCount: 156, color: 'F2FCE4'),
     CategoryModel(title: 'Smart TVs', image: 'https://cdn-icons-png.flaticon.com/512/716/716429.png', itemCount: 428, color: 'FFF3EB'),

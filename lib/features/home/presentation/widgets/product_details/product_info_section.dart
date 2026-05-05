@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import 'package:hilcom/features/home/domain/models/product_model.dart';
+import '../../providers/home_provider.dart';
 
-class ProductInfoSection extends StatelessWidget {
+class ProductInfoSection extends StatefulWidget {
   final ProductModel product;
   final bool isMobile;
 
@@ -13,28 +16,38 @@ class ProductInfoSection extends StatelessWidget {
   });
 
   @override
+  State<ProductInfoSection> createState() => _ProductInfoSectionState();
+}
+
+class _ProductInfoSectionState extends State<ProductInfoSection> {
+  int _quantity = 1;
+  String _selectedSize = '60g';
+
+  final List<String> _sizeOptions = ['50g', '60g', '80g', '100g', '150g'];
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (product.badge != null)
+        if (widget.product.badge != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              color: AppColors.badgeSale.withOpacity(0.1),
+              color: AppColors.badgeSale.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(5),
             ),
             child: Text(
-              product.badge!,
+              widget.product.badge!,
               style: const TextStyle(
                   color: AppColors.badgeSale, fontWeight: FontWeight.bold),
             ),
           ),
         const SizedBox(height: 15),
         Text(
-          product.title,
+          widget.product.title,
           style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                fontSize: isMobile ? 28 : 40,
+                fontSize: widget.isMobile ? 28 : 40,
                 color: AppColors.heading,
                 fontWeight: FontWeight.bold,
               ),
@@ -46,7 +59,7 @@ class ProductInfoSection extends StatelessWidget {
               children: List.generate(
                   5,
                   (index) => Icon(
-                        index < product.rating.floor()
+                        index < widget.product.rating.floor()
                             ? Icons.star
                             : Icons.star_border,
                         color: AppColors.secondary,
@@ -54,7 +67,7 @@ class ProductInfoSection extends StatelessWidget {
                       )),
             ),
             const SizedBox(width: 8),
-            Text('(${product.rating} reviews)',
+            Text('(${widget.product.rating} reviews)',
                 style: const TextStyle(color: AppColors.textBody)),
           ],
         ),
@@ -63,7 +76,7 @@ class ProductInfoSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'GH₵ ${product.price}',
+              'GH₵ ${widget.product.price.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
@@ -71,7 +84,7 @@ class ProductInfoSection extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 20),
-            if (product.oldPrice != null)
+            if (widget.product.oldPrice != null)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,7 +93,7 @@ class ProductInfoSection extends StatelessWidget {
                           color: AppColors.badgeHot,
                           fontWeight: FontWeight.bold)),
                   Text(
-                    'GH₵ ${product.oldPrice}',
+                    'GH₵ ${widget.product.oldPrice?.toStringAsFixed(2)}',
                     style: const TextStyle(
                       fontSize: 24,
                       color: AppColors.textBody,
@@ -93,7 +106,7 @@ class ProductInfoSection extends StatelessWidget {
         ),
         const SizedBox(height: 25),
         const Text(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ac dui sed nunc sagittis rhoncus at a mi. Aliquam hendrerit pulvinar mollis. Donec ut sem.',
+          'Experience premium quality with this item. Carefully sourced and built to last, it brings both style and functionality to your lifestyle. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
           style: TextStyle(color: AppColors.textBody, fontSize: 16, height: 1.6),
         ),
         const SizedBox(height: 30),
@@ -102,35 +115,43 @@ class ProductInfoSection extends StatelessWidget {
         const SizedBox(height: 10),
         Wrap(
           spacing: 10,
-          children: [
-            _buildSizeOption('50g', false),
-            _buildSizeOption('60g', true),
-            _buildSizeOption('80g', false),
-            _buildSizeOption('100g', false),
-            _buildSizeOption('150g', false),
-          ],
+          children: _sizeOptions.map((size) => _buildSizeOption(size)).toList(),
         ),
         const SizedBox(height: 35),
         Row(
           children: [
             Container(
               height: 50,
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.primary),
+                border: Border.all(color: AppColors.primary.withValues(alpha: 0.5)),
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Row(
                 children: [
-                  const Text('1',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 30,
+                    child: Text('$_quantity',
+                        textAlign: TextAlign.center,
+                        style:
+                            const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  ),
+                  const SizedBox(width: 5),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.keyboard_arrow_up, size: 16),
-                      Icon(Icons.keyboard_arrow_down, size: 16),
+                    children: [
+                      InkWell(
+                        onTap: () => setState(() => _quantity++),
+                        child: const Icon(Icons.keyboard_arrow_up, size: 20, color: AppColors.primary),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (_quantity > 1) {
+                            setState(() => _quantity--);
+                          }
+                        },
+                        child: const Icon(Icons.keyboard_arrow_down, size: 20, color: AppColors.primary),
+                      ),
                     ],
                   ),
                 ],
@@ -139,7 +160,19 @@ class ProductInfoSection extends StatelessWidget {
             const SizedBox(width: 20),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<HomeProvider>().addToCart(widget.product, quantity: _quantity);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${widget.product.title} added to cart'),
+                      duration: const Duration(seconds: 2),
+                      action: SnackBarAction(
+                        label: 'View Cart',
+                        onPressed: () => context.push('/cart'),
+                      ),
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.shopping_cart_outlined),
                 label: const Text('Add to cart'),
                 style: ElevatedButton.styleFrom(
@@ -151,7 +184,7 @@ class ProductInfoSection extends StatelessWidget {
                 ),
               ),
             ),
-            if (!isMobile) ...[
+            if (!widget.isMobile) ...[
               const SizedBox(width: 15),
               _buildActionIcon(Icons.favorite_border),
               const SizedBox(width: 10),
@@ -159,7 +192,7 @@ class ProductInfoSection extends StatelessWidget {
             ],
           ],
         ),
-        if (isMobile) ...[
+        if (widget.isMobile) ...[
           const SizedBox(height: 15),
           Row(
             children: [
@@ -180,7 +213,7 @@ class ProductInfoSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildMetaInfo('Type:', 'Organic'),
+                  _buildMetaInfo('Type:', widget.product.category),
                   _buildMetaInfo('MFG:', 'Jun 4, 2024'),
                   _buildMetaInfo('Stock:', '8 Items In Stock'),
                 ],
@@ -190,8 +223,8 @@ class ProductInfoSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildMetaInfo('SKU:', 'FWM15VK'),
-                  _buildMetaInfo('Tags:', 'Snack, Organic, Brown'),
+                  _buildMetaInfo('SKU:', 'HIL-${widget.product.brand.toUpperCase().substring(0, 3)}'),
+                  _buildMetaInfo('Tags:', 'Premium, Featured, New'),
                 ],
               ),
             ),
@@ -201,21 +234,25 @@ class ProductInfoSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSizeOption(String label, bool isSelected) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: isSelected ? AppColors.primary : Colors.transparent,
-        border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.border,
+  Widget _buildSizeOption(String label) {
+    bool isSelected = _selectedSize == label;
+    return InkWell(
+      onTap: () => setState(() => _selectedSize = label),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary : Colors.transparent,
+          border: Border.all(
+            color: isSelected ? AppColors.primary : AppColors.border,
+          ),
+          borderRadius: BorderRadius.circular(5),
         ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Text(
-        label,
-        style: TextStyle(
-          color: isSelected ? Colors.white : AppColors.textBody,
-          fontWeight: FontWeight.bold,
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : AppColors.textBody,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

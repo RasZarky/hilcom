@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '../../domain/models/product_model.dart';
+import '../providers/home_provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 
 class ProductCard extends StatelessWidget {
@@ -118,13 +120,30 @@ class ProductCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryLight,
-                          borderRadius: BorderRadius.circular(4),
+                      InkWell(
+                        onTap: () {
+                          context.read<HomeProvider>().addToCart(product);
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${product.title} added to cart'),
+                              duration: const Duration(seconds: 3),
+                              showCloseIcon: true,
+                              action: SnackBarAction(
+                                label: 'View Cart',
+                                onPressed: () => context.push('/cart'),
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Icon(Icons.add, color: AppColors.primary, size: 18),
                         ),
-                        child: const Icon(Icons.add, color: AppColors.primary, size: 18),
                       ),
                     ],
                   ),

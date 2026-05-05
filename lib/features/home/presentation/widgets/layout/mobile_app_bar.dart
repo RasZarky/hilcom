@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
+import '../../providers/home_provider.dart';
 
 class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MobileAppBar({super.key});
@@ -57,7 +59,7 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
                             color: AppColors.heading, size: 22),
                           onPressed: () {},
                         ),
-                        _buildCartAction(),
+                        _buildCartAction(context),
                         const SizedBox(width: 4),
                       ],
                     ),
@@ -140,39 +142,44 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildCartAction() {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        IconButton(
-          icon: const Icon(Icons.shopping_cart_outlined,
-              color: AppColors.heading, size: 22),
-          onPressed: () {},
-        ),
-        Positioned(
-          top: 10,
-          right: 4,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              color: AppColors.primary,
-              shape: BoxShape.circle,
+  Widget _buildCartAction(BuildContext context) {
+    return Consumer<HomeProvider>(
+      builder: (context, provider, _) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.shopping_cart_outlined,
+                  color: AppColors.heading, size: 22),
+              onPressed: () => context.push('/cart'),
             ),
-            constraints: const BoxConstraints(
-              minWidth: 16, minHeight: 16,
-            ),
-            child: const Text(
-              '3',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 8,
-                fontWeight: FontWeight.bold,
+            if (provider.cartCount > 0)
+              Positioned(
+                top: 10,
+                right: 4,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 16, minHeight: 16,
+                  ),
+                  child: Text(
+                    '${provider.cartCount}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ],
+          ],
+        );
+      }
     );
   }
 }
