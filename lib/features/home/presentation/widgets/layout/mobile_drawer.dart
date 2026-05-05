@@ -1,7 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
+import '../../providers/auth_provider.dart';
 
 class MobileDrawer extends StatelessWidget {
   const MobileDrawer({super.key});
@@ -9,6 +11,7 @@ class MobileDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentPath = GoRouterState.of(context).uri.path;
+    final authProvider = context.watch<AuthProvider>();
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.85,
@@ -58,14 +61,6 @@ class MobileDrawer extends StatelessWidget {
                     ),
                     _buildMenuItem(
                       context,
-                      icon: Icons.grid_view_rounded,
-                      activeIcon: Icons.grid_view_rounded,
-                      label: 'Categories',
-                      route: '/categories',
-                      isActive: currentPath == '/categories',
-                    ),
-                    _buildMenuItem(
-                      context,
                       icon: Icons.info_outline_rounded,
                       activeIcon: Icons.info_rounded,
                       label: 'About Us',
@@ -80,18 +75,17 @@ class MobileDrawer extends StatelessWidget {
                       route: '/contact',
                       isActive: currentPath == '/contact',
                     ),
-                    _buildMenuItem(
-                      context,
-                      icon: Icons.local_offer_outlined,
-                      activeIcon: Icons.local_offer_rounded,
-                      label: 'Hot Deals',
-                      route: '/deals',
-                      isActive: currentPath == '/deals',
-                      badge: 'NEW',
-                    ),
 
                     const SizedBox(height: 25),
                     _buildSectionTitle('YOUR HILCOM'),
+                    _buildMenuItem(
+                      context,
+                      icon: Icons.person_outline_rounded,
+                      activeIcon: Icons.person_rounded,
+                      label: 'Account',
+                      route: authProvider.isLoggedIn ? '/account' : '/login',
+                      isActive: currentPath == '/account',
+                    ),
                     _buildMenuItem(
                       context,
                       icon: Icons.inventory_2_outlined,
@@ -99,14 +93,6 @@ class MobileDrawer extends StatelessWidget {
                       label: 'My Products',
                       route: '/my-products',
                       isActive: currentPath == '/my-products',
-                    ),
-                    _buildMenuItem(
-                      context,
-                      icon: Icons.favorite_outline_rounded,
-                      activeIcon: Icons.favorite_rounded,
-                      label: 'My Wishlist',
-                      route: '/wishlist',
-                      isActive: currentPath == '/wishlist',
                     ),
                     _buildMenuItem(
                       context,
@@ -124,7 +110,7 @@ class MobileDrawer extends StatelessWidget {
                 ),
               ),
 
-              _buildFooter(context),
+              _buildFooter(context, authProvider),
             ],
           ),
         ],
@@ -237,7 +223,7 @@ class MobileDrawer extends StatelessWidget {
       child: InkWell(
         onTap: () {
           context.pop();
-          if (!isActive) context.go(route);
+          context.go(route);
         },
         borderRadius: BorderRadius.circular(20),
         child: AnimatedContainer(
@@ -324,7 +310,7 @@ class MobileDrawer extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            'Get up to 50% off on all fresh vegetables.',
+            'Get up to 50% off on all fresh products.',
             style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 12),
           ),
           const SizedBox(height: 15),
@@ -344,7 +330,7 @@ class MobileDrawer extends StatelessWidget {
     );
   }
 
-  Widget _buildFooter(BuildContext context) {
+  Widget _buildFooter(BuildContext context, AuthProvider auth) {
     return Container(
       padding: const EdgeInsets.all(30),
       child: Column(
@@ -353,23 +339,44 @@ class MobileDrawer extends StatelessWidget {
           const SizedBox(height: 20),
           Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 20,
                 backgroundColor: AppColors.primaryLight,
-                child: Icon(Icons.person, color: AppColors.primary),
+                child: Icon(
+                  auth.isLoggedIn ? Icons.person : Icons.person_outline, 
+                  color: AppColors.primary,
+                ),
               ),
               const SizedBox(width: 15),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Welcome Guest', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.heading)),
-                  Text('Sign in to your account', style: TextStyle(fontSize: 11, color: AppColors.textBody)),
-                ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      auth.isLoggedIn ? (auth.userName ?? 'User') : 'Welcome Guest', 
+                      style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.heading),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      auth.isLoggedIn ? 'Manage your account' : 'Sign in to your account', 
+                      style: const TextStyle(fontSize: 11, color: AppColors.textBody),
+                    ),
+                  ],
+                ),
               ),
-              const Spacer(),
               IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.login_rounded, color: AppColors.primary),
+                onPressed: () {
+                  context.pop();
+                  if (auth.isLoggedIn) {
+                    context.go('/account');
+                  } else {
+                    context.go('/login');
+                  }
+                },
+                icon: Icon(
+                  auth.isLoggedIn ? Icons.settings_outlined : Icons.login_rounded, 
+                  color: AppColors.primary,
+                ),
               ),
             ],
           ),

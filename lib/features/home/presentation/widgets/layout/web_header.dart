@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import '../../providers/home_provider.dart';
+import '../../providers/auth_provider.dart';
 
 class WebHeader extends StatelessWidget implements PreferredSizeWidget {
   const WebHeader({super.key});
@@ -124,7 +125,18 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                     },
                   ),
                   _buildHeaderAction(Icons.inventory_2_outlined, 'My Products', onTap: () => context.go('/my-products')),
-                  _buildHeaderAction(Icons.person_outline_rounded, 'Account'),
+                  _buildHeaderAction(
+                    Icons.person_outline_rounded, 
+                    'Account',
+                    onTap: () {
+                      final auth = context.read<AuthProvider>();
+                      if (auth.isLoggedIn) {
+                        context.go('/account');
+                      } else {
+                        context.go('/login');
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
