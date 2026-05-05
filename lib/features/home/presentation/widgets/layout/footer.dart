@@ -52,12 +52,12 @@ class Footer extends StatelessWidget {
                   'Sign In',
                   'View Cart',
                   'My Wishlist',
+                  'My Products',
                   'Track My Order',
                   'Help Ticket',
                   'Shipping Details'
                 ]),
                 _buildFooterColumn('Corporate', [
-                  'Become a Vendor',
                   'Affiliate Program',
                   'Farm Business',
                   'Farm Careers',

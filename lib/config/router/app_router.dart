@@ -5,6 +5,7 @@ import '../../features/home/presentation/pages/about_page.dart';
 import '../../features/home/presentation/pages/contact_page.dart';
 import '../../features/home/presentation/pages/product_details_page.dart';
 import '../../features/home/presentation/pages/sell_to_hilcom_page.dart';
+import '../../features/home/presentation/pages/my_products_page.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -24,6 +25,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/sell-to-hilcom',
       builder: (context, state) => const SellToHilcomPage(),
+    ),
+    GoRoute(
+      path: '/my-products',
+      builder: (context, state) => const MyProductsPage(),
     ),
     GoRoute(
       path: '/product',

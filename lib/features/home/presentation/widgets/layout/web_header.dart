@@ -107,9 +107,9 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   const SizedBox(width: 40),
-                  _buildHeaderAction(Icons.refresh_rounded, 'Compare'),
-                  _buildHeaderAction(Icons.favorite_outline_rounded, 'Wishlist'),
-                  _buildHeaderAction(Icons.shopping_cart_outlined, 'Cart', badge: '3'),
+                  _buildHeaderAction(Icons.favorite_outline_rounded, 'Wishlist', onTap: () => context.go('/wishlist')),
+                  _buildHeaderAction(Icons.shopping_cart_outlined, 'Cart', badge: '3', onTap: () => context.go('/cart')),
+                  _buildHeaderAction(Icons.inventory_2_outlined, 'My Products', onTap: () => context.go('/my-products')),
                   _buildHeaderAction(Icons.person_outline_rounded, 'Account'),
                 ],
               ),
@@ -120,11 +120,11 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  Widget _buildHeaderAction(IconData icon, String label, {String? badge}) {
+  Widget _buildHeaderAction(IconData icon, String label, {String? badge, VoidCallback? onTap}) {
     return Padding(
       padding: const EdgeInsets.only(left: 25),
       child: InkWell(
-        onTap: () {},
+        onTap: onTap,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

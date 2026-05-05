@@ -94,6 +94,14 @@ class MobileDrawer extends StatelessWidget {
                     _buildSectionTitle('YOUR HILCOM'),
                     _buildMenuItem(
                       context,
+                      icon: Icons.inventory_2_outlined,
+                      activeIcon: Icons.inventory_2_rounded,
+                      label: 'My Products',
+                      route: '/my-products',
+                      isActive: currentPath == '/my-products',
+                    ),
+                    _buildMenuItem(
+                      context,
                       icon: Icons.favorite_outline_rounded,
                       activeIcon: Icons.favorite_rounded,
                       label: 'My Wishlist',
@@ -125,7 +133,7 @@ class MobileDrawer extends StatelessWidget {
   }
 
   Widget _buildModernHeader(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: Stack(
         children: [
@@ -168,11 +176,11 @@ class MobileDrawer extends StatelessWidget {
                     child: Image.asset('assets/images/logo.png', fit: BoxFit.contain),
                   ),
                   const SizedBox(width: 15),
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
+                      Text(
                         'Hilcom',
                         style: TextStyle(
                           fontSize: 24,

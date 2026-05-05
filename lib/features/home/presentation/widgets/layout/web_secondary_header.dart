@@ -32,7 +32,7 @@ class WebSecondaryHeader extends StatelessWidget {
           const SizedBox(width: 20),
           _buildNavLink(context, 'Shop', '#'),
           const SizedBox(width: 20),
-          _buildNavLink(context, 'Vendors', '#'),
+          _buildNavLink(context, 'My Products', '/my-products'),
           const SizedBox(width: 20),
           _buildNavLink(context, 'Contact', '/contact'),
           const Spacer(),
@@ -41,7 +41,7 @@ class WebSecondaryHeader extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('1900 - 888',
+              const Text('1900 - 888',
                   style: TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,

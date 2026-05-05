@@ -29,8 +29,7 @@ class _ProductTabsState extends State<ProductTabs> {
               children: [
                 _buildTab('Description', 0),
                 _buildTab('Additional info', 1),
-                _buildTab('Vendor', 2),
-                _buildTab('Reviews (3)', 3),
+                _buildTab('Reviews (3)', 2),
               ],
             ),
           ),
