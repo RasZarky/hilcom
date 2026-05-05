@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 
 class BottomBanner extends StatelessWidget {
@@ -8,48 +9,141 @@ class BottomBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(isMobile ? 15 : 50),
-      height: 300,
+      margin: EdgeInsets.symmetric(
+        horizontal: isMobile ? 15 : 50,
+        vertical: 40,
+      ),
+      // Use constraints instead of fixed height to avoid overflow when text wraps
+      constraints: BoxConstraints(
+        minHeight: isMobile ? 400 : 340,
+      ),
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        image: const DecorationImage(
-          image: NetworkImage('https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1200&auto=format&fit=crop'),
-          fit: BoxFit.cover,
-        ),
-      ),
-      padding: const EdgeInsets.all(40),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            'Stay home & get your daily\nneeds from our shop',
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppColors.heading),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
-          const SizedBox(height: 20),
-          const Text('Start Your Daily Shopping with Hilcom Mart', style: TextStyle(fontSize: 18, color: AppColors.textBody)),
-          const SizedBox(height: 30),
-          if (!isMobile)
-            Container(
-              width: 400,
-              height: 50,
-              decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(25)),
-              child: Row(
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Stack(
+          children: [
+            // Background Image
+            Positioned.fill(
+              child: Image.network(
+                'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200&auto=format&fit=crop',
+                fit: BoxFit.cover,
+              ),
+            ),
+            // Sophisticated Gradient Overlay
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: isMobile ? Alignment.topCenter : Alignment.centerLeft,
+                    end: isMobile ? Alignment.bottomCenter : Alignment.centerRight,
+                    colors: [
+                      AppColors.heading.withOpacity(0.95),
+                      AppColors.heading.withOpacity(0.8),
+                      AppColors.heading.withOpacity(0.4),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            // Content Section - Not positioned, so it defines the height of the Stack
+            Padding(
+              padding: EdgeInsets.all(isMobile ? 30 : 60),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(width: 20),
-                  const Expanded(child: TextField(decoration: InputDecoration(hintText: 'Your email address', border: InputBorder.none))),
                   Container(
-                    height: 50,
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
-                    decoration: BoxDecoration(color: AppColors.primary, borderRadius: BorderRadius.circular(25)),
-                    alignment: Alignment.center,
-                    child: const Text('Subscribe', style: TextStyle(color: Colors.white)),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: AppColors.primary.withOpacity(0.5),
+                        width: 1,
+                      ),
+                    ),
+                    child: const Text(
+                      'DIRECT PURCHASE PROGRAM',
+                      style: TextStyle(
+                        color: AppColors.primary,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    isMobile 
+                        ? 'Turn Your Quality\nItems into Cash'
+                        : 'Turn Your Quality Items into Cash:\nSell Directly to Hilcom',
+                    style: TextStyle(
+                      fontSize: isMobile ? 28 : 36,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                      height: 1.1,
+                      letterSpacing: -0.5,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Text(
+                      'Have premium items? Submit them for evaluation. We buy directly from you and handle the rest.',
+                      style: TextStyle(
+                        fontSize: isMobile ? 14 : 16,
+                        color: Colors.white.withOpacity(0.85),
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Material(
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.circular(12),
+                    child: InkWell(
+                      onTap: () => context.push('/sell-to-hilcom'),
+                      borderRadius: BorderRadius.circular(12),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Start Selling',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }
