@@ -11,8 +11,10 @@ import '../../features/home/presentation/pages/login_page.dart';
 import '../../features/home/presentation/pages/account_page.dart';
 import '../../features/home/presentation/pages/register_page.dart';
 import '../../features/home/presentation/pages/forgot_password_page.dart';
+import '../../features/home/presentation/pages/wishlist_page.dart';
 
 final appRouter = GoRouter(
+  debugLogDiagnostics: true,
   initialLocation: '/',
   routes: [
     GoRoute(
@@ -38,6 +40,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/cart',
       builder: (context, state) => const CartPage(),
+    ),
+    GoRoute(
+      path: '/wishlist',
+      builder: (context, state) => const WishlistPage(),
     ),
     GoRoute(
       path: '/login',

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import 'package:hilcom/features/home/domain/models/product_model.dart';
 import '../../providers/home_provider.dart';
+import '../../providers/auth_provider.dart';
 
 class ProductInfoSection extends StatefulWidget {
   final ProductModel product;
@@ -24,6 +25,15 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
   String _selectedSize = '60g';
 
   final List<String> _sizeOptions = ['50g', '60g', '80g', '100g', '150g'];
+
+  void _handleAction(BuildContext context, VoidCallback action) {
+    final auth = context.read<AuthProvider>();
+    if (auth.isLoggedIn) {
+      action();
+    } else {
+      context.push('/login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +170,7 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
             const SizedBox(width: 20),
             Expanded(
               child: ElevatedButton.icon(
-                onPressed: () {
+                onPressed: () => _handleAction(context, () {
                   context.read<HomeProvider>().addToCart(widget.product, quantity: _quantity);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -172,7 +182,7 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
                       ),
                     ),
                   );
-                },
+                }),
                 icon: const Icon(Icons.shopping_cart_outlined),
                 label: const Text('Add to cart'),
                 style: ElevatedButton.styleFrom(
@@ -186,7 +196,7 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
             ),
             if (!widget.isMobile) ...[
               const SizedBox(width: 15),
-              _buildActionIcon(Icons.favorite_border),
+              _buildWishlistButton(),
               const SizedBox(width: 10),
               _buildActionIcon(Icons.refresh),
             ],
@@ -196,7 +206,7 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
           const SizedBox(height: 15),
           Row(
             children: [
-              _buildActionIcon(Icons.favorite_border),
+              _buildWishlistButton(),
               const SizedBox(width: 10),
               _buildActionIcon(Icons.refresh),
               const SizedBox(width: 10),
@@ -255,6 +265,30 @@ class _ProductInfoSectionState extends State<ProductInfoSection> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildWishlistButton() {
+    return Consumer<HomeProvider>(
+      builder: (context, provider, _) {
+        final isInWishlist = provider.isInWishlist(widget.product);
+        return InkWell(
+          onTap: () => _handleAction(context, () => provider.toggleWishlist(widget.product)),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              border: Border.all(color: isInWishlist ? AppColors.primary : AppColors.border),
+              borderRadius: BorderRadius.circular(5),
+              color: isInWishlist ? AppColors.primary.withValues(alpha: 0.1) : Colors.transparent,
+            ),
+            child: Icon(
+              isInWishlist ? Icons.favorite : Icons.favorite_border,
+              color: isInWishlist ? Colors.red : AppColors.textBody,
+              size: 20,
+            ),
+          ),
+        );
+      },
     );
   }
 

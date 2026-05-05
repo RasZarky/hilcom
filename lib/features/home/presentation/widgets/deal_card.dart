@@ -5,11 +5,21 @@ import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import '../../domain/models/product_model.dart';
 import '../providers/home_provider.dart';
+import '../providers/auth_provider.dart';
 
 class DealCard extends StatelessWidget {
   final ProductModel product;
 
   const DealCard({super.key, required this.product});
+
+  void _handleAction(BuildContext context, VoidCallback action) {
+    final auth = context.read<AuthProvider>();
+    if (auth.isLoggedIn) {
+      action();
+    } else {
+      context.push('/login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +118,7 @@ class DealCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () => _handleAction(context, () {
                               context.read<HomeProvider>().addToCart(product);
                               ScaffoldMessenger.of(context).hideCurrentSnackBar();
                               ScaffoldMessenger.of(context).showSnackBar(
@@ -122,7 +132,7 @@ class DealCard extends StatelessWidget {
                                   ),
                                 ),
                               );
-                            },
+                            }),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.primaryLight,
                               foregroundColor: AppColors.primary,

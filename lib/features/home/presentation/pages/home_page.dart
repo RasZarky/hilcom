@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import '../providers/home_provider.dart';
+import '../providers/auth_provider.dart';
 import '../widgets/category_card.dart';
 import '../widgets/product_card.dart';
 import '../widgets/deal_card.dart';
@@ -15,6 +16,27 @@ import 'package:hilcom/core/theme/app_colors.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
+
+  void _handleAddToCart(BuildContext context, dynamic product) {
+    final auth = context.read<AuthProvider>();
+    if (auth.isLoggedIn) {
+      context.read<HomeProvider>().addToCart(product);
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${product.title} added to cart'),
+          duration: const Duration(seconds: 3),
+          showCloseIcon: true,
+          action: SnackBarAction(
+            label: 'View Cart',
+            onPressed: () => context.push('/cart'),
+          ),
+        ),
+      );
+    } else {
+      context.push('/login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -395,21 +417,7 @@ class HomePage extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16)),
                                 InkWell(
-                                  onTap: () {
-                                    context.read<HomeProvider>().addToCart(p);
-                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('${p.title} added to cart'),
-                                        duration: const Duration(seconds: 3),
-                                        showCloseIcon: true,
-                                        action: SnackBarAction(
-                                          label: 'View Cart',
-                                          onPressed: () => context.push('/cart'),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                  onTap: () => _handleAddToCart(context, p),
                                   child: Container(
                                     padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(

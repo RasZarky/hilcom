@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import '../../providers/home_provider.dart';
+import '../../providers/auth_provider.dart';
 
 class MobileAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MobileAppBar({super.key});
@@ -23,6 +24,15 @@ class _MobileAppBarState extends State<MobileAppBar> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  void _navigateToPage(BuildContext context, String route) {
+    final auth = context.read<AuthProvider>();
+    if (auth.isLoggedIn) {
+      context.push(route);
+    } else {
+      context.push('/login');
+    }
   }
 
   @override
@@ -93,6 +103,7 @@ class _MobileAppBarState extends State<MobileAppBar> {
             });
           },
         ),
+        _buildWishlistAction(context),
         _buildCartAction(context),
         const SizedBox(width: 4),
       ],
@@ -202,6 +213,47 @@ class _MobileAppBarState extends State<MobileAppBar> {
     );
   }
 
+  Widget _buildWishlistAction(BuildContext context) {
+    return Consumer<HomeProvider>(
+      builder: (context, provider, _) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.favorite_border_rounded,
+                  color: AppColors.heading, size: 22),
+              onPressed: () => _navigateToPage(context, '/wishlist'),
+            ),
+            if (provider.wishlistCount > 0)
+              Positioned(
+                top: 10,
+                right: 4,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: AppColors.primary,
+                    shape: BoxShape.circle,
+                  ),
+                  constraints: const BoxConstraints(
+                    minWidth: 16, minHeight: 16,
+                  ),
+                  child: Text(
+                    '${provider.wishlistCount}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 8,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+          ],
+        );
+      }
+    );
+  }
+
   Widget _buildCartAction(BuildContext context) {
     return Consumer<HomeProvider>(
       builder: (context, provider, _) {
@@ -211,7 +263,7 @@ class _MobileAppBarState extends State<MobileAppBar> {
             IconButton(
               icon: const Icon(Icons.shopping_cart_outlined,
                   color: AppColors.heading, size: 22),
-              onPressed: () => context.push('/cart'),
+              onPressed: () => _navigateToPage(context, '/cart'),
             ),
             if (provider.cartCount > 0)
               Positioned(

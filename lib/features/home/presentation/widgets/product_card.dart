@@ -4,12 +4,22 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../../domain/models/product_model.dart';
 import '../providers/home_provider.dart';
+import '../providers/auth_provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
 
   const ProductCard({super.key, required this.product});
+
+  void _handleAction(BuildContext context, VoidCallback action) {
+    final auth = context.read<AuthProvider>();
+    if (auth.isLoggedIn) {
+      action();
+    } else {
+      context.push('/login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +131,7 @@ class ProductCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 4),
                       InkWell(
-                        onTap: () {
+                        onTap: () => _handleAction(context, () {
                           context.read<HomeProvider>().addToCart(product);
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -135,7 +145,7 @@ class ProductCard extends StatelessWidget {
                               ),
                             ),
                           );
-                        },
+                        }),
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -169,6 +179,36 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
               ),
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Consumer<HomeProvider>(
+                builder: (context, provider, _) {
+                  final isInWishlist = provider.isInWishlist(product);
+                  return InkWell(
+                    onTap: () => _handleAction(context, () => provider.toggleWishlist(product)),
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.8),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        isInWishlist ? Icons.favorite : Icons.favorite_border,
+                        color: isInWishlist ? Colors.red : AppColors.textBody,
+                        size: 18,
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

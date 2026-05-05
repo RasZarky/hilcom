@@ -12,6 +12,15 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(100);
 
+  void _navigateToPage(BuildContext context, String route) {
+    final auth = context.read<AuthProvider>();
+    if (auth.isLoggedIn) {
+      context.go(route);
+    } else {
+      context.go('/login');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -113,29 +122,35 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                     ),
                   ),
                   const SizedBox(width: 40),
-                  _buildHeaderAction(Icons.favorite_outline_rounded, 'Wishlist', onTap: () => context.go('/wishlist')),
+                  Consumer<HomeProvider>(
+                    builder: (context, provider, _) {
+                      return _buildHeaderAction(
+                        Icons.favorite_outline_rounded,
+                        'Wishlist',
+                        badge: provider.wishlistCount > 0 ? '${provider.wishlistCount}' : null,
+                        onTap: () => _navigateToPage(context, '/wishlist'),
+                      );
+                    },
+                  ),
                   Consumer<HomeProvider>(
                     builder: (context, provider, _) {
                       return _buildHeaderAction(
                         Icons.shopping_cart_outlined,
                         'Cart',
                         badge: provider.cartCount > 0 ? '${provider.cartCount}' : null,
-                        onTap: () => context.go('/cart'),
+                        onTap: () => _navigateToPage(context, '/cart'),
                       );
                     },
                   ),
-                  _buildHeaderAction(Icons.inventory_2_outlined, 'My Products', onTap: () => context.go('/my-products')),
+                  _buildHeaderAction(
+                    Icons.inventory_2_outlined, 
+                    'My Products', 
+                    onTap: () => _navigateToPage(context, '/my-products')
+                  ),
                   _buildHeaderAction(
                     Icons.person_outline_rounded, 
                     'Account',
-                    onTap: () {
-                      final auth = context.read<AuthProvider>();
-                      if (auth.isLoggedIn) {
-                        context.go('/account');
-                      } else {
-                        context.go('/login');
-                      }
-                    },
+                    onTap: () => _navigateToPage(context, '/account'),
                   ),
                 ],
               ),

@@ -5,14 +5,17 @@ import '../../domain/models/cart_item_model.dart';
 
 class HomeProvider extends ChangeNotifier {
   final List<CartItemModel> _cartItems = [];
+  final List<ProductModel> _wishlistItems = [];
   String _searchQuery = '';
 
   List<CartItemModel> get cartItems => _cartItems;
+  List<ProductModel> get wishlistItems => _wishlistItems;
   String get searchQuery => _searchQuery;
 
   double get cartTotal => _cartItems.fold(0, (sum, item) => sum + item.total);
 
   int get cartCount => _cartItems.fold(0, (sum, item) => sum + item.quantity);
+  int get wishlistCount => _wishlistItems.length;
 
   void addToCart(ProductModel product, {int quantity = 1}) {
     final existingIndex = _cartItems.indexWhere((item) => item.product.title == product.title);
@@ -20,6 +23,18 @@ class HomeProvider extends ChangeNotifier {
       _cartItems[existingIndex].quantity += quantity;
     } else {
       _cartItems.add(CartItemModel(product: product, quantity: quantity));
+    }
+    notifyListeners();
+  }
+
+  void addAllToCart(List<ProductModel> products) {
+    for (var product in products) {
+      final existingIndex = _cartItems.indexWhere((item) => item.product.title == product.title);
+      if (existingIndex >= 0) {
+        _cartItems[existingIndex].quantity += 1;
+      } else {
+        _cartItems.add(CartItemModel(product: product, quantity: 1));
+      }
     }
     notifyListeners();
   }
@@ -40,6 +55,25 @@ class HomeProvider extends ChangeNotifier {
 
   void clearCart() {
     _cartItems.clear();
+    notifyListeners();
+  }
+
+  void toggleWishlist(ProductModel product) {
+    final index = _wishlistItems.indexWhere((item) => item.title == product.title);
+    if (index >= 0) {
+      _wishlistItems.removeAt(index);
+    } else {
+      _wishlistItems.add(product);
+    }
+    notifyListeners();
+  }
+
+  bool isInWishlist(ProductModel product) {
+    return _wishlistItems.any((item) => item.title == product.title);
+  }
+
+  void clearWishlist() {
+    _wishlistItems.clear();
     notifyListeners();
   }
 

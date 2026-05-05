@@ -4,14 +4,25 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import '../../providers/auth_provider.dart';
+import '../../providers/home_provider.dart';
 
 class MobileDrawer extends StatelessWidget {
   const MobileDrawer({super.key});
+
+  void _navigateToPage(BuildContext context, String route, bool isLoggedIn) {
+    context.pop(); // Close drawer
+    if (isLoggedIn) {
+      context.go(route);
+    } else {
+      context.go('/login');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final currentPath = GoRouterState.of(context).uri.path;
     final authProvider = context.watch<AuthProvider>();
+    final homeProvider = context.watch<HomeProvider>();
 
     return Drawer(
       width: MediaQuery.of(context).size.width * 0.85,
@@ -56,7 +67,10 @@ class MobileDrawer extends StatelessWidget {
                       icon: Icons.home_outlined,
                       activeIcon: Icons.home_rounded,
                       label: 'Home',
-                      route: '/',
+                      onTap: () {
+                        context.pop();
+                        context.go('/');
+                      },
                       isActive: currentPath == '/',
                     ),
                     _buildMenuItem(
@@ -64,7 +78,10 @@ class MobileDrawer extends StatelessWidget {
                       icon: Icons.info_outline_rounded,
                       activeIcon: Icons.info_rounded,
                       label: 'About Us',
-                      route: '/about',
+                      onTap: () {
+                        context.pop();
+                        context.go('/about');
+                      },
                       isActive: currentPath == '/about',
                     ),
                     _buildMenuItem(
@@ -72,7 +89,10 @@ class MobileDrawer extends StatelessWidget {
                       icon: Icons.contact_support_outlined,
                       activeIcon: Icons.contact_support_rounded,
                       label: 'Contact',
-                      route: '/contact',
+                      onTap: () {
+                        context.pop();
+                        context.go('/contact');
+                      },
                       isActive: currentPath == '/contact',
                     ),
 
@@ -83,7 +103,7 @@ class MobileDrawer extends StatelessWidget {
                       icon: Icons.person_outline_rounded,
                       activeIcon: Icons.person_rounded,
                       label: 'Account',
-                      route: authProvider.isLoggedIn ? '/account' : '/login',
+                      onTap: () => _navigateToPage(context, '/account', authProvider.isLoggedIn),
                       isActive: currentPath == '/account',
                     ),
                     _buildMenuItem(
@@ -91,16 +111,26 @@ class MobileDrawer extends StatelessWidget {
                       icon: Icons.inventory_2_outlined,
                       activeIcon: Icons.inventory_2_rounded,
                       label: 'My Products',
-                      route: '/my-products',
+                      onTap: () => _navigateToPage(context, '/my-products', authProvider.isLoggedIn),
                       isActive: currentPath == '/my-products',
+                    ),
+                    _buildMenuItem(
+                      context,
+                      icon: Icons.favorite_outline_rounded,
+                      activeIcon: Icons.favorite_rounded,
+                      label: 'My Wishlist',
+                      onTap: () => _navigateToPage(context, '/wishlist', authProvider.isLoggedIn),
+                      isActive: currentPath == '/wishlist',
+                      badge: homeProvider.wishlistCount > 0 ? '${homeProvider.wishlistCount}' : null,
                     ),
                     _buildMenuItem(
                       context,
                       icon: Icons.shopping_cart_outlined,
                       activeIcon: Icons.shopping_cart_rounded,
                       label: 'My Cart',
-                      route: '/cart',
+                      onTap: () => _navigateToPage(context, '/cart', authProvider.isLoggedIn),
                       isActive: currentPath == '/cart',
+                      badge: homeProvider.cartCount > 0 ? '${homeProvider.cartCount}' : null,
                     ),
 
                     const SizedBox(height: 30),
@@ -214,17 +244,14 @@ class MobileDrawer extends StatelessWidget {
     required IconData icon,
     required IconData activeIcon,
     required String label,
-    required String route,
+    required VoidCallback onTap,
     required bool isActive,
     String? badge,
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: InkWell(
-        onTap: () {
-          context.pop();
-          context.go(route);
-        },
+        onTap: onTap,
         borderRadius: BorderRadius.circular(20),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
