@@ -9,7 +9,7 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
   const WebHeader({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(100); // Increased height for floating effect
+  Size get preferredSize => const Size.fromHeight(100);
 
   @override
   Widget build(BuildContext context) {
@@ -92,9 +92,12 @@ class WebHeader extends StatelessWidget implements PreferredSizeWidget {
                             endIndent: 10,
                             color: AppColors.primary.withValues(alpha: 0.2),
                           ),
-                          const Expanded(
+                          Expanded(
                             child: TextField(
-                              decoration: InputDecoration(
+                              onChanged: (value) {
+                                context.read<HomeProvider>().setSearchQuery(value);
+                              },
+                              decoration: const InputDecoration(
                                 hintText: 'Search for items...',
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.symmetric(horizontal: 15),

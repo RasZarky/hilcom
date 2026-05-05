@@ -5,8 +5,10 @@ import '../../domain/models/cart_item_model.dart';
 
 class HomeProvider extends ChangeNotifier {
   final List<CartItemModel> _cartItems = [];
+  String _searchQuery = '';
 
   List<CartItemModel> get cartItems => _cartItems;
+  String get searchQuery => _searchQuery;
 
   double get cartTotal => _cartItems.fold(0, (sum, item) => sum + item.total);
 
@@ -39,6 +41,25 @@ class HomeProvider extends ChangeNotifier {
   void clearCart() {
     _cartItems.clear();
     notifyListeners();
+  }
+
+  void setSearchQuery(String query) {
+    _searchQuery = query;
+    notifyListeners();
+  }
+
+  List<ProductModel> get filteredProducts {
+    final allProducts = [...popularProducts, ...dealsOfTheDay];
+    // Remove duplicates if any (based on title)
+    final uniqueProducts = { for (var p in allProducts) p.title : p }.values.toList();
+    
+    if (_searchQuery.isEmpty) return [];
+    
+    return uniqueProducts.where((product) {
+      return product.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+             product.category.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+             product.brand.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
   }
 
   List<CategoryModel> get categories => [

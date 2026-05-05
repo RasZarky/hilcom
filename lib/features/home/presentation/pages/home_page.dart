@@ -25,21 +25,95 @@ class HomePage extends StatelessWidget {
       appBar: isMobile ? const MobileAppBar() : const WebHeader(),
       drawer: isMobile ? const MobileDrawer() : null,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Add spacing for the floating app bar
-            SizedBox(height: isMobile ? 110 : 120),
-            if (!isMobile) const WebSecondaryHeader(currentPage: 'Home'),
-            _buildCategorySection(context, isMobile),
-            _buildProductSection(context, isMobile),
-            _buildDailyBestSells(context, isMobile),
-            _buildDealsOfTheDay(context, isMobile),
-            _buildProductLists(context, isMobile),
-            BottomBanner(isMobile: isMobile),
-            _buildFeatureIcons(context, isMobile),
-            Footer(isMobile: isMobile),
-          ],
+        child: Consumer<HomeProvider>(
+          builder: (context, provider, _) {
+            final hasSearch = provider.searchQuery.isNotEmpty;
+            
+            return Column(
+              children: [
+                // Add spacing for the floating app bar
+                SizedBox(height: isMobile ? 110 : 120),
+                if (!isMobile) const WebSecondaryHeader(currentPage: 'Home'),
+                
+                if (hasSearch)
+                  _buildSearchResults(context, provider, isMobile)
+                else ...[
+                  _buildCategorySection(context, isMobile),
+                  _buildProductSection(context, isMobile),
+                  _buildDailyBestSells(context, isMobile),
+                  _buildDealsOfTheDay(context, isMobile),
+                  _buildProductLists(context, isMobile),
+                  BottomBanner(isMobile: isMobile),
+                  _buildFeatureIcons(context, isMobile),
+                ],
+                Footer(isMobile: isMobile),
+              ],
+            );
+          },
         ),
+      ),
+    );
+  }
+
+  Widget _buildSearchResults(BuildContext context, HomeProvider provider, bool isMobile) {
+    final results = provider.filteredProducts;
+    
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: isMobile ? 15 : 50, vertical: 40),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                'Search Results for "${provider.searchQuery}"',
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontSize: isMobile ? 24 : 32,
+                ),
+              ),
+              const Spacer(),
+              TextButton(
+                onPressed: () => provider.setSearchQuery(''),
+                child: const Text('Clear Search'),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Text(
+            '${results.length} items found',
+            style: const TextStyle(color: AppColors.textBody),
+          ),
+          const SizedBox(height: 30),
+          if (results.isEmpty)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.search_off, size: 80, color: AppColors.border),
+                  const SizedBox(height: 20),
+                  Text(
+                    'No products found matching your search.',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
+              ),
+            )
+          else
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: isMobile ? 2 : 5,
+                childAspectRatio: 0.7,
+                crossAxisSpacing: 15,
+                mainAxisSpacing: 15,
+              ),
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                return ProductCard(product: results[index]);
+              },
+            ),
+        ],
       ),
     );
   }

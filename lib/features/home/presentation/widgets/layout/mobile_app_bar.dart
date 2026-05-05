@@ -5,11 +5,25 @@ import 'package:provider/provider.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import '../../providers/home_provider.dart';
 
-class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
+class MobileAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MobileAppBar({super.key});
 
   @override
+  State<MobileAppBar> createState() => _MobileAppBarState();
+
+  @override
   Size get preferredSize => const Size.fromHeight(100);
+}
+
+class _MobileAppBarState extends State<MobileAppBar> {
+  bool _isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,49 +34,20 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Row(
               children: [
-                // Separate Floating Glass Circle for Custom Hamburger
-                _buildGlassCircle(
-                  onTap: () => Scaffold.of(context).openDrawer(),
-                  child: const _CustomHamburger(),
-                ),
-                const SizedBox(width: 12),
+                if (!_isSearching) ...[
+                  // Separate Floating Glass Circle for Custom Hamburger
+                  _buildGlassCircle(
+                    onTap: () => Scaffold.of(context).openDrawer(),
+                    child: const _CustomHamburger(),
+                  ),
+                  const SizedBox(width: 12),
+                ],
                 // Main Glassmorphic AppBar Container
                 Expanded(
                   child: _buildGlassContainer(
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 12),
-                        GestureDetector(
-                          onTap: () => context.go('/'),
-                          child: Hero(
-                            tag: 'logo-img',
-                            child: Image.asset(
-                              'assets/images/logo.png',
-                              height: 28,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          'Hilcom',
-                          style: TextStyle(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            letterSpacing: -0.5,
-                          ),
-                        ),
-                        const Spacer(),
-                        IconButton(
-                          icon: const Icon(Icons.search_rounded, 
-                            color: AppColors.heading, size: 22),
-                          onPressed: () {},
-                        ),
-                        _buildCartAction(context),
-                        const SizedBox(width: 4),
-                      ],
-                    ),
+                    child: _isSearching 
+                      ? _buildSearchField(context)
+                      : _buildDefaultTitle(context),
                   ),
                 ),
               ],
@@ -70,6 +55,81 @@ class MobileAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         );
       }
+    );
+  }
+
+  Widget _buildDefaultTitle(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(width: 12),
+        GestureDetector(
+          onTap: () => context.go('/'),
+          child: Hero(
+            tag: 'logo-img',
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 28,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        const Text(
+          'Hilcom',
+          style: TextStyle(
+            color: AppColors.primary,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            letterSpacing: -0.5,
+          ),
+        ),
+        const Spacer(),
+        IconButton(
+          icon: const Icon(Icons.search_rounded, 
+            color: AppColors.heading, size: 22),
+          onPressed: () {
+            setState(() {
+              _isSearching = true;
+            });
+          },
+        ),
+        _buildCartAction(context),
+        const SizedBox(width: 4),
+      ],
+    );
+  }
+
+  Widget _buildSearchField(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(width: 12),
+        Expanded(
+          child: TextField(
+            controller: _searchController,
+            autofocus: true,
+            onChanged: (value) {
+              context.read<HomeProvider>().setSearchQuery(value);
+            },
+            decoration: const InputDecoration(
+              hintText: 'Search products...',
+              border: InputBorder.none,
+              hintStyle: TextStyle(fontSize: 14, color: AppColors.textBody),
+            ),
+            style: const TextStyle(fontSize: 14, color: AppColors.heading),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.close_rounded, color: AppColors.heading, size: 22),
+          onPressed: () {
+            setState(() {
+              _isSearching = false;
+              _searchController.clear();
+              context.read<HomeProvider>().setSearchQuery('');
+            });
+          },
+        ),
+        const SizedBox(width: 4),
+      ],
     );
   }
 
