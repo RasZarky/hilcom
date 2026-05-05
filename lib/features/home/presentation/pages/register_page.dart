@@ -7,36 +7,33 @@ import '../widgets/layout/web_header.dart';
 import '../widgets/layout/mobile_app_bar.dart';
 import '../widgets/layout/footer.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
-  void _handleLogin() {
+  void _handleRegister() {
     if (_formKey.currentState!.validate()) {
-      context.read<AuthProvider>().login(
-        _emailController.text,
-        _passwordController.text,
-      );
-      if (context.canPop()) {
-        context.pop();
-      } else {
-        context.go('/');
-      }
+      // For now just navigate back or to home
+      context.go('/');
     }
   }
 
@@ -73,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Login',
+                        'Create Account',
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
@@ -81,10 +78,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Welcome back! Please enter your details.',
+                        'Join us! Please enter your details.',
                         style: TextStyle(color: AppColors.textBody),
                       ),
                       const SizedBox(height: 30),
+                      _buildTextField(
+                        label: 'Full Name',
+                        controller: _nameController,
+                        hint: 'Enter your full name',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) return 'Please enter your name';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 20),
                       _buildTextField(
                         label: 'Email Address',
                         controller: _emailController,
@@ -108,21 +115,23 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => context.go('/forgot-password'),
-                          child: const Text('Forgot Password?',
-                              style: TextStyle(color: AppColors.primary)),
-                        ),
-                      ),
                       const SizedBox(height: 20),
+                      _buildTextField(
+                        label: 'Confirm Password',
+                        controller: _confirmPasswordController,
+                        hint: 'Confirm your password',
+                        obscureText: true,
+                        validator: (value) {
+                          if (value != _passwordController.text) return 'Passwords do not match';
+                          return null;
+                        },
+                      ),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: double.infinity,
                         height: 55,
                         child: ElevatedButton(
-                          onPressed: _handleLogin,
+                          onPressed: _handleRegister,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             shape: RoundedRectangleBorder(
@@ -130,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           child: const Text(
-                            'Log In',
+                            'Sign Up',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -143,10 +152,10 @@ class _LoginPageState extends State<LoginPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?"),
+                          const Text("Already have an account?"),
                           TextButton(
-                            onPressed: () => context.go('/register'),
-                            child: const Text('Sign Up',
+                            onPressed: () => context.go('/login'),
+                            child: const Text('Log In',
                                 style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
                           ),
                         ],

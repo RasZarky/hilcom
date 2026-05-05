@@ -1,42 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
-import '../providers/auth_provider.dart';
 import '../widgets/layout/web_header.dart';
 import '../widgets/layout/mobile_app_bar.dart';
 import '../widgets/layout/footer.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class ForgotPasswordPage extends StatefulWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
 
   @override
   void dispose() {
     _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
-  void _handleLogin() {
+  void _handleResetPassword() {
     if (_formKey.currentState!.validate()) {
-      context.read<AuthProvider>().login(
-        _emailController.text,
-        _passwordController.text,
+      // For now just show a snackbar and navigate back
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password reset link sent to your email')),
       );
-      if (context.canPop()) {
-        context.pop();
-      } else {
-        context.go('/');
-      }
+      context.go('/login');
     }
   }
 
@@ -73,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Login',
+                        'Forgot Password',
                         style: Theme.of(context).textTheme.displayMedium?.copyWith(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
@@ -81,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Welcome back! Please enter your details.',
+                        'No worries! Enter your email and we will send you a reset link.',
                         style: TextStyle(color: AppColors.textBody),
                       ),
                       const SizedBox(height: 30),
@@ -96,33 +88,12 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 20),
-                      _buildTextField(
-                        label: 'Password',
-                        controller: _passwordController,
-                        hint: 'Enter your password',
-                        obscureText: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) return 'Please enter your password';
-                          if (value.length < 6) return 'Password must be at least 6 characters';
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () => context.go('/forgot-password'),
-                          child: const Text('Forgot Password?',
-                              style: TextStyle(color: AppColors.primary)),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       SizedBox(
                         width: double.infinity,
                         height: 55,
                         child: ElevatedButton(
-                          onPressed: _handleLogin,
+                          onPressed: _handleResetPassword,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
                             shape: RoundedRectangleBorder(
@@ -130,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           child: const Text(
-                            'Log In',
+                            'Send Reset Link',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -140,16 +111,19 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Text("Don't have an account?"),
-                          TextButton(
-                            onPressed: () => context.go('/register'),
-                            child: const Text('Sign Up',
-                                style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                      Center(
+                        child: TextButton(
+                          onPressed: () => context.go('/login'),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.arrow_back, size: 16, color: AppColors.primary),
+                              SizedBox(width: 8),
+                              Text('Back to Login',
+                                  style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

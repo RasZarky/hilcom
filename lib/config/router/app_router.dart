@@ -9,6 +9,8 @@ import '../../features/home/presentation/pages/my_products_page.dart';
 import '../../features/home/presentation/pages/cart_page.dart';
 import '../../features/home/presentation/pages/login_page.dart';
 import '../../features/home/presentation/pages/account_page.dart';
+import '../../features/home/presentation/pages/register_page.dart';
+import '../../features/home/presentation/pages/forgot_password_page.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/',
@@ -40,6 +42,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterPage(),
+    ),
+    GoRoute(
+      path: '/forgot-password',
+      builder: (context, state) => const ForgotPasswordPage(),
     ),
     GoRoute(
       path: '/account',
