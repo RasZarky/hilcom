@@ -84,7 +84,6 @@ class HomeProvider extends ChangeNotifier {
 
   List<ProductModel> get filteredProducts {
     final allProducts = [...popularProducts, ...dealsOfTheDay];
-    // Remove duplicates if any (based on title)
     final uniqueProducts = { for (var p in allProducts) p.title : p }.values.toList();
     
     if (_searchQuery.isEmpty) return [];
@@ -117,6 +116,7 @@ class HomeProvider extends ChangeNotifier {
       price: 89990.00,
       oldPrice: 94990.0,
       badge: 'Hot',
+      videoUrl: 'https://www.tiktok.com/@hilcomltd/video/7571909547321756940?q=hilcom&t=1778036418950',
     ),
     ProductModel(
       title: 'Samsung 75" Class QN90C Neo QLED 4K Smart TV',
@@ -127,6 +127,7 @@ class HomeProvider extends ChangeNotifier {
       price: 2299.99,
       oldPrice: 2799.99,
       badge: 'Sale',
+      videoUrl: 'https://www.tiktok.com/@hilcomltd/video/7630112951592160532?q=hilcom%20tv&t=1778036600053',
     ),
     ProductModel(
       title: 'Sony WH-1000XM5 Wireless Noise Canceling Headphones',
@@ -139,23 +140,25 @@ class HomeProvider extends ChangeNotifier {
       badge: 'New',
     ),
     ProductModel(
-      title: 'Memory Foam Queen Mattress with Cooling Gel',
-      category: 'Bed & Bath',
-      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400',
-      rating: 4.5,
-      brand: 'SleepWell',
-      price: 599.00,
-      oldPrice: 750.00,
+      title: 'iPhone 15 Pro Max 256GB - Titanium',
+      category: 'Electronics',
+      image: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&q=80&w=400',
+      rating: 4.9,
+      brand: 'Apple',
+      price: 1199.00,
+      oldPrice: 1299.00,
+      badge: 'Hot',
+      videoUrl: 'https://www.tiktok.com/@hilcomltd/video/7617196949942439175?q=hilcom%20iphone&t=1778036768732',
     ),
     ProductModel(
-      title: 'Harman Kardon SoundStick 4 - Bluetooth System',
-      category: 'Audio Systems',
-      image: 'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&q=80&w=400',
-      rating: 4.6,
-      brand: 'Harman Kardon',
-      price: 299.95,
-      oldPrice: 349.00,
-      badge: '-15%',
+      title: 'Dyson V15 Detect Cordless Vacuum',
+      category: 'Appliances',
+      image: 'https://images.unsplash.com/photo-1558317374-067df5f15430?auto=format&fit=crop&q=80&w=400',
+      rating: 4.8,
+      brand: 'Dyson',
+      price: 749.99,
+      oldPrice: 799.99,
+      videoUrl: 'https://www.tiktok.com/@dyson/video/7199223344556677889',
     ),
   ];
 
@@ -168,15 +171,18 @@ class HomeProvider extends ChangeNotifier {
       brand: 'LuxLiving',
       price: 1299.00,
       oldPrice: 1599.00,
+      videoUrl: 'https://www.tiktok.com/@luxuryfurniture/video/7234567890123456789',
     ),
     ProductModel(
-      title: 'Bose Surround Sound System 700',
-      category: 'Audio Systems',
-      image: 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400',
+      title: 'KitchenAid Artisan Series 5-Quart Mixer',
+      category: 'Appliances',
+      image: 'https://images.unsplash.com/photo-1594385208974-2e75f9d8ad48?auto=format&fit=crop&q=80&w=400',
       rating: 4.9,
-      brand: 'Bose',
-      price: 799.00,
-      oldPrice: 899.00,
+      brand: 'KitchenAid',
+      price: 449.99,
+      oldPrice: 499.99,
+      badge: 'Deal',
+      videoUrl: 'https://www.tiktok.com/@kitchenaidusa/video/7211223344556677889',
     ),
     ProductModel(
       title: 'Yamaha YZF-R1 Superbike 2023',
@@ -186,6 +192,7 @@ class HomeProvider extends ChangeNotifier {
       brand: 'Yamaha',
       price: 17599.00,
       oldPrice: 18200.00,
+      videoUrl: 'https://www.tiktok.com/@yamahamotoreu/video/7212345678901234567',
     ),
   ];
 

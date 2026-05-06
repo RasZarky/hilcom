@@ -12,6 +12,7 @@ import 'package:hilcom/features/home/presentation/widgets/product_details/produc
 import 'package:hilcom/features/home/presentation/widgets/product_details/product_info_section.dart';
 import 'package:hilcom/features/home/presentation/widgets/product_details/product_tabs.dart';
 import 'package:hilcom/features/home/presentation/widgets/product_details/product_sidebar.dart';
+import 'package:hilcom/features/home/presentation/widgets/product_details/product_video_section.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final ProductModel product;
@@ -68,6 +69,10 @@ class ProductDetailsPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 50),
+              if (product.videoUrl != null) ...[
+                ProductVideoSection(videoUrl: product.videoUrl!, isMobile: false),
+                const SizedBox(height: 50),
+              ],
               const ProductTabs(isMobile: false),
               const SizedBox(height: 50),
               _buildRelatedProducts(context, false),
@@ -91,6 +96,10 @@ class ProductDetailsPage extends StatelessWidget {
         const SizedBox(height: 30),
         ProductInfoSection(product: product, isMobile: true),
         const SizedBox(height: 40),
+        if (product.videoUrl != null) ...[
+          ProductVideoSection(videoUrl: product.videoUrl!, isMobile: true),
+          const SizedBox(height: 40),
+        ],
         const ProductTabs(isMobile: true),
         const SizedBox(height: 40),
         _buildRelatedProducts(context, true),
@@ -155,17 +164,24 @@ class ProductDetailsPage extends StatelessWidget {
       'https://picsum.photos/id/3/400/400',
       'https://picsum.photos/id/4/400/400'
     ];
+    final videos = [
+      'https://www.tiktok.com/@apple/video/7277889912345678901',
+      'https://www.tiktok.com/@bose/video/7123456789012345678',
+      'https://www.tiktok.com/@sony/video/7331234567890123456',
+      'https://www.tiktok.com/@canon/video/7256789012345678901'
+    ];
 
     return ProductCard(
       product: ProductModel(
         title: titles[index],
-        category: 'Organic',
+        category: 'Electronics',
         image: images[index],
         rating: 4.5,
         brand: 'HilcomFood',
         price: 25.0 + (index * 10),
         oldPrice: 35.0 + (index * 10),
         badge: index % 2 == 0 ? 'New' : 'Hot',
+        videoUrl: videos[index],
       ),
     );
   }

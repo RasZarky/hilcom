@@ -7,6 +7,7 @@ class ProductModel {
   final double price;
   final double? oldPrice;
   final String? badge;
+  final String? videoUrl; // Optional TikTok or other video URL
 
   ProductModel({
     required this.title,
@@ -17,5 +18,6 @@ class ProductModel {
     required this.price,
     this.oldPrice,
     this.badge,
+    this.videoUrl,
   });
 }
