@@ -15,6 +15,7 @@ import '../../features/home/presentation/pages/forgot_password_page.dart';
 import '../../features/home/presentation/pages/wishlist_page.dart';
 import '../../features/home/presentation/pages/splash_page.dart';
 import '../../features/home/presentation/pages/category_page.dart';
+import '../../features/admin/presentation/pages/admin_dashboard_page.dart';
 
 final appRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -66,6 +67,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/admin-login',
       builder: (context, state) => const AdminLoginPage(),
+    ),
+    GoRoute(
+      path: '/admin-dashboard',
+      builder: (context, state) => const AdminDashboardPage(),
     ),
     GoRoute(
       path: '/register',

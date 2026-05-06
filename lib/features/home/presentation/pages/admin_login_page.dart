@@ -28,7 +28,7 @@ class _AdminLoginPageState extends State<AdminLoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Admin login successful (Demo)')),
         );
-        context.go('/');
+        context.go('/admin-dashboard');
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Invalid admin credentials')),
