@@ -433,7 +433,7 @@ class _AccountPageState extends State<AccountPage> {
             status: 'Pending',
             total: 'GH₵ 450.00',
             date: 'Jun 12, 2024',
-            items: [
+            items: const [
               {'name': 'Tesla Model S Plaid', 'image': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=400'},
               {'name': 'Samsung 75" Neo QLED', 'image': 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&q=80&w=400'},
             ],
@@ -444,7 +444,7 @@ class _AccountPageState extends State<AccountPage> {
             status: 'Delivered',
             total: 'GH₵ 1,200.00',
             date: 'May 28, 2024',
-            items: [
+            items: const [
               {'name': 'Sony WH-1000XM5', 'image': 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=400'},
               {'name': 'Classic King Bed Frame', 'image': 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400'},
               {'name': 'Harman Kardon SoundStick', 'image': 'https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&q=80&w=400'},
@@ -572,7 +572,7 @@ class _AccountPageState extends State<AccountPage> {
             status: 'Pending',
             total: 'GH₵ 450.00',
             date: 'Jun 12, 2024',
-            items: [
+            items: const [
               {'name': 'Tesla Model S Plaid', 'image': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=400'},
               {'name': 'Samsung 75" Neo QLED', 'image': 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&q=80&w=400'},
             ],
@@ -583,7 +583,7 @@ class _AccountPageState extends State<AccountPage> {
             status: 'Delivered',
             total: 'GH₵ 1,200.00',
             date: 'May 28, 2024',
-            items: [
+            items: const [
               {'name': 'Sony WH-1000XM5', 'image': 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=400'},
               {'name': 'Classic King Bed Frame', 'image': 'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=400'},
             ],
@@ -594,7 +594,7 @@ class _AccountPageState extends State<AccountPage> {
             status: 'Cancelled',
             total: 'GH₵ 89.00',
             date: 'May 10, 2024',
-            items: [
+            items: const [
               {'name': 'Tesla Model S Plaid', 'image': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&q=80&w=400'},
             ],
           ),
@@ -828,12 +828,6 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 20),
           _buildTextField('Phone Number', TextEditingController(text: '+233 50 000 0000')),
           const SizedBox(height: 40),
-          const Text('Change Password', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.heading)),
-          const SizedBox(height: 20),
-          _buildTextField('Current Password', TextEditingController(), obscureText: true),
-          const SizedBox(height: 15),
-          _buildTextField('New Password', TextEditingController(), obscureText: true),
-          const SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully!'), backgroundColor: AppColors.primary));
