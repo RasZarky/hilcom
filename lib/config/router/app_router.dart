@@ -13,6 +13,7 @@ import '../../features/home/presentation/pages/register_page.dart';
 import '../../features/home/presentation/pages/forgot_password_page.dart';
 import '../../features/home/presentation/pages/wishlist_page.dart';
 import '../../features/home/presentation/pages/splash_page.dart';
+import '../../features/home/presentation/pages/category_page.dart';
 
 final appRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -25,6 +26,13 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/category/:name',
+      builder: (context, state) {
+        final categoryName = state.pathParameters['name']!;
+        return CategoryPage(categoryName: categoryName);
+      },
     ),
     GoRoute(
       path: '/about',

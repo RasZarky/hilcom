@@ -16,9 +16,9 @@ class WebSecondaryHeader extends StatelessWidget {
       child: Row(
         children: [
           ElevatedButton.icon(
-            onPressed: () {},
-            icon: const Icon(Icons.grid_view),
-            label: const Text('Browse All Categories'),
+            onPressed: () => context.push('/sell-to-hilcom'),
+            icon: const Icon(Icons.question_mark),
+            label: const Text('Have products to sell?'),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
