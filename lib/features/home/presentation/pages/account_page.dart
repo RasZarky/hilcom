@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
@@ -70,7 +69,7 @@ class _AccountPageState extends State<AccountPage> {
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(40)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 30,
             offset: const Offset(0, 10),
           ),
@@ -83,7 +82,7 @@ class _AccountPageState extends State<AccountPage> {
             top: -50,
             child: CircleAvatar(
               radius: 100,
-              backgroundColor: AppColors.primary.withOpacity(0.05),
+              backgroundColor: AppColors.primary.withValues(alpha: 0.05),
             ),
           ),
           Padding(
@@ -104,7 +103,7 @@ class _AccountPageState extends State<AccountPage> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.secondary.withOpacity(0.1),
+                          color: AppColors.secondary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: const Row(
@@ -137,7 +136,7 @@ class _AccountPageState extends State<AccountPage> {
                       Text(
                         auth.userEmail ?? 'user@email.com',
                         style: TextStyle(
-                          color: AppColors.textBody.withOpacity(0.7),
+                          color: AppColors.textBody.withValues(alpha: 0.7),
                           fontWeight: FontWeight.w500,
                           fontSize: 16,
                         ),
@@ -155,7 +154,7 @@ class _AccountPageState extends State<AccountPage> {
                     label: const Text('Sign Out'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.redAccent,
-                      side: BorderSide(color: Colors.redAccent.withOpacity(0.2)),
+                      side: BorderSide(color: Colors.redAccent.withValues(alpha: 0.2)),
                       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     ),
@@ -182,9 +181,9 @@ class _AccountPageState extends State<AccountPage> {
         children: [
           Container(
             padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              gradient: const LinearGradient(
+              gradient: LinearGradient(
                 colors: [AppColors.primary, AppColors.secondary],
               ),
             ),
@@ -193,7 +192,7 @@ class _AccountPageState extends State<AccountPage> {
               backgroundColor: Colors.white,
               child: CircleAvatar(
                 radius: isMobile ? 42 : 57,
-                backgroundColor: AppColors.primary.withOpacity(0.1),
+                backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                 child: Icon(Icons.person_rounded, size: isMobile ? 45 : 60, color: AppColors.primary),
               ),
             ),
@@ -207,7 +206,7 @@ class _AccountPageState extends State<AccountPage> {
                 color: Colors.white,
                 shape: BoxShape.circle,
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10),
+                  BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10),
                 ],
               ),
               child: const Icon(Icons.edit_rounded, size: 16, color: AppColors.heading),
@@ -264,7 +263,7 @@ class _AccountPageState extends State<AccountPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.02), blurRadius: 20, offset: const Offset(0, 10)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 20, offset: const Offset(0, 10)),
         ],
       ),
       child: Column(
@@ -288,18 +287,18 @@ class _AccountPageState extends State<AccountPage> {
                 },
                 leading: Icon(
                   menuItems[index]['icon'] as IconData,
-                  color: isSelected ? AppColors.primary : AppColors.heading.withOpacity(0.5),
+                  color: isSelected ? AppColors.primary : AppColors.heading.withValues(alpha: 0.5),
                   size: 22,
                 ),
                 title: Text(
                   label,
                   style: TextStyle(
-                    color: isSelected ? AppColors.heading : AppColors.heading.withOpacity(0.6),
+                    color: isSelected ? AppColors.heading : AppColors.heading.withValues(alpha: 0.6),
                     fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
                   ),
                 ),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                tileColor: isSelected ? AppColors.primary.withOpacity(0.08) : Colors.transparent,
+                tileColor: isSelected ? AppColors.primary.withValues(alpha: 0.08) : Colors.transparent,
                 trailing: isSelected 
                   ? Container(
                       width: 4,
@@ -374,7 +373,7 @@ class _AccountPageState extends State<AccountPage> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
-            BoxShadow(color: color.withOpacity(0.06), blurRadius: 20, offset: const Offset(0, 10)),
+            BoxShadow(color: color.withValues(alpha: 0.06), blurRadius: 20, offset: const Offset(0, 10)),
           ],
         ),
         child: Column(
@@ -383,7 +382,7 @@ class _AccountPageState extends State<AccountPage> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Icon(icon, color: color, size: 24),
@@ -396,7 +395,7 @@ class _AccountPageState extends State<AccountPage> {
             const SizedBox(height: 4),
             Text(
               label,
-              style: TextStyle(fontSize: 14, color: AppColors.textBody.withOpacity(0.6), fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 14, color: AppColors.textBody.withValues(alpha: 0.6), fontWeight: FontWeight.bold),
             ),
           ],
         ),
@@ -412,7 +411,7 @@ class _AccountPageState extends State<AccountPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 30, offset: const Offset(0, 10)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 30, offset: const Offset(0, 10)),
         ],
       ),
       child: Column(
@@ -472,7 +471,7 @@ class _AccountPageState extends State<AccountPage> {
           children: [
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: Colors.grey.withOpacity(0.05), borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.05), borderRadius: BorderRadius.circular(12)),
               child: const Icon(Icons.receipt_long_rounded, color: AppColors.heading),
             ),
             const SizedBox(width: 15),
@@ -481,7 +480,7 @@ class _AccountPageState extends State<AccountPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(id, style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.heading, fontSize: 16)),
-                  Text(date, style: TextStyle(color: AppColors.textBody, fontSize: 13)),
+                  Text(date, style: const TextStyle(color: AppColors.textBody, fontSize: 13)),
                 ],
               ),
             ),
@@ -492,7 +491,7 @@ class _AccountPageState extends State<AccountPage> {
                 const SizedBox(height: 4),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(color: statusColor.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+                  decoration: BoxDecoration(color: statusColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
                   child: Text(status, style: TextStyle(color: statusColor, fontSize: 11, fontWeight: FontWeight.bold)),
                 ),
               ],
@@ -515,7 +514,7 @@ class _AccountPageState extends State<AccountPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.border.withOpacity(0.5)),
+                  border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
                 ),
                 child: Row(
                   children: [
@@ -561,7 +560,7 @@ class _AccountPageState extends State<AccountPage> {
       decoration: BoxDecoration(
         color: Colors.white, 
         borderRadius: BorderRadius.circular(30),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 20)],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 20)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -610,7 +609,7 @@ class _AccountPageState extends State<AccountPage> {
       children: [
         const Text('Shipping Addresses', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: AppColors.heading)),
         const SizedBox(height: 30),
-        ...(auth.addresses ?? []).map((address) => Padding(
+        ...auth.addresses.map((address) => Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: _buildAddressCard(context, auth, address),
         )),
@@ -637,7 +636,7 @@ class _AccountPageState extends State<AccountPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
-        border: address.isDefault ? Border.all(color: AppColors.primary, width: 2) : Border.all(color: AppColors.border.withOpacity(0.5)),
+        border: address.isDefault ? Border.all(color: AppColors.primary, width: 2) : Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -649,7 +648,7 @@ class _AccountPageState extends State<AccountPage> {
               if (address.isDefault)
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
                   child: const Text('DEFAULT', style: TextStyle(color: AppColors.primary, fontSize: 10, fontWeight: FontWeight.bold)),
                 ),
             ],
@@ -813,7 +812,11 @@ class _AccountPageState extends State<AccountPage> {
 
     return Container(
       padding: const EdgeInsets.all(30),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30), boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 20)]),
+      decoration: BoxDecoration(
+        color: Colors.white, 
+        borderRadius: BorderRadius.circular(30), 
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 20)]
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -825,6 +828,12 @@ class _AccountPageState extends State<AccountPage> {
           const SizedBox(height: 20),
           _buildTextField('Phone Number', TextEditingController(text: '+233 50 000 0000')),
           const SizedBox(height: 40),
+          const Text('Change Password', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.heading)),
+          const SizedBox(height: 20),
+          _buildTextField('Current Password', TextEditingController(), obscureText: true),
+          const SizedBox(height: 15),
+          _buildTextField('New Password', TextEditingController(), obscureText: true),
+          const SizedBox(height: 30),
           ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated successfully!'), backgroundColor: AppColors.primary));
@@ -855,7 +864,7 @@ class _AccountPageState extends State<AccountPage> {
           obscureText: obscureText,
           decoration: InputDecoration(
             filled: true,
-            fillColor: enabled ? Colors.white : Colors.grey.withOpacity(0.05),
+            fillColor: enabled ? Colors.white : Colors.grey.withValues(alpha: 0.05),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: AppColors.border)),
             enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: AppColors.border)),
             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: AppColors.primary, width: 2)),
@@ -893,7 +902,7 @@ class _AccountPageState extends State<AccountPage> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(30),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 20)],
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.01), blurRadius: 20)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -926,7 +935,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(color: Colors.orange.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(color: Colors.orange.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
                 child: const Text('PENDING', style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold, fontSize: 12)),
               ),
             ],
