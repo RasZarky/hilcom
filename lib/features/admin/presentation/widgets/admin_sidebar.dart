@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hilcom/core/theme/app_colors.dart';
 import 'package:hilcom/core/utils/responsive.dart';
 
@@ -8,6 +9,7 @@ class AdminSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
+    final String location = GoRouterState.of(context).matchedLocation;
     
     final Widget sidebarContent = Column(
       children: [
@@ -20,18 +22,29 @@ class AdminSidebar extends StatelessWidget {
               _SidebarItem(
                 icon: Icons.grid_view,
                 title: 'Dashboard',
-                isActive: true,
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location == '/admin-dashboard',
+                onTap: () {
+                  context.go('/admin-dashboard');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.shopping_cart_outlined,
                 title: 'Order Management',
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location == '/order-management',
+                onTap: () {
+                  context.go('/order-management');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.people_outline,
                 title: 'Customers',
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location == '/customers',
+                onTap: () {
+                  context.go('/customers');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.confirmation_number_outlined,
@@ -114,7 +127,6 @@ class AdminSidebar extends StatelessWidget {
 
   void _handleTap(BuildContext context, bool isDesktop) {
     if (!isDesktop) {
-      // Use Scaffold.of to close if it's a drawer
       Scaffold.of(context).closeDrawer();
     }
   }
@@ -134,7 +146,7 @@ class AdminSidebar extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           const Text(
-            'DEALPORT',
+            'HILCOM',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -174,8 +186,8 @@ class AdminSidebar extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
-                    Text('Dealport', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                    Text('Mark@thedesigner...', style: TextStyle(color: AppColors.textBody, fontSize: 11), overflow: TextOverflow.ellipsis),
+                    Text('Hilcom Admin', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                    Text('admin@hilcom.com', style: TextStyle(color: AppColors.textBody, fontSize: 11), overflow: TextOverflow.ellipsis),
                   ],
                 ),
               ),
@@ -186,7 +198,10 @@ class AdminSidebar extends StatelessWidget {
           _SidebarItem(
             icon: Icons.storefront,
             title: 'Your Shop',
-            onTap: () => _handleTap(context, isDesktop),
+            onTap: () {
+              context.go('/');
+              _handleTap(context, isDesktop);
+            },
             trailing: const Icon(Icons.open_in_new, size: 14, color: AppColors.textBody),
           ),
         ],

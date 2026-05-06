@@ -16,6 +16,8 @@ import '../../features/home/presentation/pages/wishlist_page.dart';
 import '../../features/home/presentation/pages/splash_page.dart';
 import '../../features/home/presentation/pages/category_page.dart';
 import '../../features/admin/presentation/pages/admin_dashboard_page.dart';
+import '../../features/admin/presentation/pages/order_management_page.dart';
+import '../../features/admin/presentation/pages/customers_page.dart';
 
 final appRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -71,6 +73,14 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/admin-dashboard',
       builder: (context, state) => const AdminDashboardPage(),
+    ),
+    GoRoute(
+      path: '/order-management',
+      builder: (context, state) => const OrderManagementPage(),
+    ),
+    GoRoute(
+      path: '/customers',
+      builder: (context, state) => const CustomersPage(),
     ),
     GoRoute(
       path: '/register',

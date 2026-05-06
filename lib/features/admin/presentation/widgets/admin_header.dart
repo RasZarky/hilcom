@@ -3,7 +3,8 @@ import 'package:hilcom/core/theme/app_colors.dart';
 import 'package:hilcom/core/utils/responsive.dart';
 
 class AdminHeader extends StatelessWidget {
-  const AdminHeader({super.key});
+  final String title;
+  const AdminHeader({super.key, this.title = 'Dashboard'});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,9 @@ class AdminHeader extends StatelessWidget {
             ),
             const SizedBox(width: 8),
           ],
-          const Text(
-            'Dashboard',
-            style: TextStyle(
+          Text(
+            title,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: AppColors.heading,
