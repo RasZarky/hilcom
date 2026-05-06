@@ -72,12 +72,15 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Login',
-                        style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      GestureDetector(
+                        onLongPress: () => context.go('/admin-login'),
+                        child: Text(
+                          'Login',
+                          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       const Text(

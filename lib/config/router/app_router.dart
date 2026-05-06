@@ -8,6 +8,7 @@ import '../../features/home/presentation/pages/sell_to_hilcom_page.dart';
 import '../../features/home/presentation/pages/my_products_page.dart';
 import '../../features/home/presentation/pages/cart_page.dart';
 import '../../features/home/presentation/pages/login_page.dart';
+import '../../features/home/presentation/pages/admin_login_page.dart';
 import '../../features/home/presentation/pages/account_page.dart';
 import '../../features/home/presentation/pages/register_page.dart';
 import '../../features/home/presentation/pages/forgot_password_page.dart';
@@ -61,6 +62,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: '/admin-login',
+      builder: (context, state) => const AdminLoginPage(),
     ),
     GoRoute(
       path: '/register',
