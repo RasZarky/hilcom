@@ -63,7 +63,11 @@ class AdminSidebar extends StatelessWidget {
               _SidebarItem(
                 icon: Icons.swap_horiz_outlined,
                 title: 'Transaction',
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location == '/admin-transactions',
+                onTap: () {
+                  context.go('/admin-transactions');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.star_outline,
@@ -75,7 +79,11 @@ class AdminSidebar extends StatelessWidget {
               _SidebarItem(
                 icon: Icons.add_circle_outline,
                 title: 'Add Products',
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location == '/add-product',
+                onTap: () {
+                  context.go('/add-product');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.perm_media_outlined,
