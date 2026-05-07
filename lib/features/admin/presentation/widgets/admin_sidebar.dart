@@ -105,7 +105,11 @@ class AdminSidebar extends StatelessWidget {
               _SidebarItem(
                 icon: Icons.admin_panel_settings_outlined,
                 title: 'Admin role',
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location == '/admin-role',
+                onTap: () {
+                  context.go('/admin-role');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.settings_input_component_outlined,

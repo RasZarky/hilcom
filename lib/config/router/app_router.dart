@@ -21,6 +21,7 @@ import '../../features/admin/presentation/pages/customers_page.dart';
 import '../../features/admin/presentation/pages/categories_page.dart';
 import '../../features/admin/presentation/pages/transaction_page.dart';
 import '../../features/admin/presentation/pages/add_product_page.dart';
+import '../../features/admin/presentation/pages/admin_role_page.dart';
 
 final appRouter = GoRouter(
   debugLogDiagnostics: true,
@@ -96,6 +97,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/add-product',
       builder: (context, state) => const AddProductPage(),
+    ),
+    GoRoute(
+      path: '/admin-role',
+      builder: (context, state) => const AdminRolePage(),
     ),
     GoRoute(
       path: '/register',
