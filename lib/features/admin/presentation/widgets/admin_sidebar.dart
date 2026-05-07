@@ -54,7 +54,11 @@ class AdminSidebar extends StatelessWidget {
               _SidebarItem(
                 icon: Icons.category_outlined,
                 title: 'Categories',
-                onTap: () => _handleTap(context, isDesktop),
+                isActive: location.startsWith('/categories'),
+                onTap: () {
+                  context.go('/categories');
+                  _handleTap(context, isDesktop);
+                },
               ),
               _SidebarItem(
                 icon: Icons.swap_horiz_outlined,
@@ -278,6 +282,38 @@ class _SidebarItem extends StatelessWidget {
             ),
             if (trailing != null) trailing!,
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SidebarSubItem extends StatelessWidget {
+  final String title;
+  final bool isActive;
+  final VoidCallback onTap;
+
+  const _SidebarSubItem({
+    required this.title,
+    this.isActive = false,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Container(
+        padding: const EdgeInsets.only(left: 48, top: 8, bottom: 8, right: 12),
+        margin: const EdgeInsets.only(bottom: 2),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: isActive ? AppColors.primary : AppColors.textBody,
+            fontSize: 13,
+            fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+          ),
         ),
       ),
     );
