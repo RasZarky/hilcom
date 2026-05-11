@@ -27,12 +27,12 @@ class Footer extends StatelessWidget {
                               fontSize: 32,
                               fontWeight: FontWeight.bold)),
                       const SizedBox(height: 20),
-                      const Text('Awesome grocery store website\ntemplate'),
+                      const Text('Day break at \nHilcom'),
                       const SizedBox(height: 20),
                       _buildFooterContactItem(Icons.location_on_outlined,
-                          'Address: 5171 W Campbell Ave undefined Kent, Utah 53127 United States'),
+                          'Address: Tamale, Ghana'),
                       _buildFooterContactItem(Icons.headset_mic_outlined,
-                          'Call Us: (+91) - 540-025-124553'),
+                          'Call Us: (+233) - 456333777'),
                       _buildFooterContactItem(Icons.email_outlined,
                           'Email: sale@hilcom.com'),
                       _buildFooterContactItem(
@@ -57,21 +57,6 @@ class Footer extends StatelessWidget {
                   'Help Ticket',
                   'Shipping Details'
                 ]),
-                _buildFooterColumn('Corporate', [
-                  'Affiliate Program',
-                  'Farm Business',
-                  'Farm Careers',
-                  'Our Suppliers',
-                  'Accessibility'
-                ]),
-                _buildFooterColumn('Popular', [
-                  'Milk & Flavoured Milk',
-                  'Butter and Margarine',
-                  'Eggs Substitutes',
-                  'Marmalades',
-                  'Sour Cream and Dips',
-                  'Tea & Kombucha'
-                ]),
               ],
             ),
           const Divider(height: 50),
@@ -79,16 +64,16 @@ class Footer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text(
-                  '© 2024, Hilcom - Flutter Ecommerce\nAll rights reserved'),
+                  '© 2026, Hilcom - Where quality is sold\nAll rights reserved'),
               if (!isMobile)
-                Row(
+                const Row(
                   children: [
-                    const Icon(Icons.phone_in_talk, color: AppColors.primary),
-                    const SizedBox(width: 10),
-                    const Column(
+                    Icon(Icons.phone_in_talk, color: AppColors.primary),
+                    SizedBox(width: 10),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('1900 - 6666',
+                        Text('+233456789023',
                             style: TextStyle(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.bold,
@@ -97,13 +82,13 @@ class Footer extends StatelessWidget {
                             style: TextStyle(fontSize: 12)),
                       ],
                     ),
-                    const SizedBox(width: 40),
-                    const Icon(Icons.phone_in_talk, color: AppColors.primary),
-                    const SizedBox(width: 10),
-                    const Column(
+                    SizedBox(width: 40),
+                    Icon(Icons.phone_in_talk, color: AppColors.primary),
+                    SizedBox(width: 10),
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('1900 - 8888',
+                        Text('+233456789023',
                             style: TextStyle(
                                 color: AppColors.primary,
                                 fontWeight: FontWeight.bold,

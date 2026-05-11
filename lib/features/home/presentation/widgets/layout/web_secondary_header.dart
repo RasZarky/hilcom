@@ -38,15 +38,15 @@ class WebSecondaryHeader extends StatelessWidget {
           const Spacer(),
           const Icon(Icons.headset_mic_outlined, color: AppColors.textBody),
           const SizedBox(width: 10),
-          Column(
+          const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('1900 - 888',
+              Text('+233 55 167 8559',
                   style: TextStyle(
                       color: AppColors.primary,
                       fontWeight: FontWeight.bold,
                       fontSize: 18)),
-              const Text('24/7 Support Center', style: TextStyle(fontSize: 12)),
+              Text('24/7 Support Center', style: TextStyle(fontSize: 12)),
             ],
           ),
         ],

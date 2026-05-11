@@ -74,30 +74,6 @@ class ProductCard extends StatelessWidget {
                       fontSize: 13,
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(Icons.star, color: AppColors.secondary, size: 14),
-                      Expanded(
-                        child: Text(
-                          ' (${product.rating})',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 11),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'By ${product.brand}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.primary,
-                      fontSize: 11,
-                    ),
-                  ),
                   const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
