@@ -82,13 +82,17 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<ProductModel> get allProducts {
+    final products = [...popularProducts, ...dealsOfTheDay];
+    return { for (var p in products) p.title : p }.values.toList();
+  }
+
   List<ProductModel> get filteredProducts {
-    final allProducts = [...popularProducts, ...dealsOfTheDay];
-    final uniqueProducts = { for (var p in allProducts) p.title : p }.values.toList();
+    final products = allProducts;
     
-    if (_searchQuery.isEmpty) return [];
+    if (_searchQuery.isEmpty) return products;
     
-    return uniqueProducts.where((product) {
+    return products.where((product) {
       return product.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
              product.category.toLowerCase().contains(_searchQuery.toLowerCase()) ||
              product.brand.toLowerCase().contains(_searchQuery.toLowerCase());

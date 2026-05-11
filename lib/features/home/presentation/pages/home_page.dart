@@ -213,7 +213,10 @@ class HomePage extends StatelessWidget {
               Text('Popular Products',
                   style: Theme.of(context).textTheme.displayMedium),
               const Spacer(),
-              const Text('All Products', style: TextStyle(color: AppColors.primary)),
+              InkWell(
+                onTap: () => context.push('/products'),
+                child: const Text('All Products', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+              ),
             ],
           ),
           const SizedBox(height: 30),

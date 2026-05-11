@@ -15,6 +15,7 @@ import '../../features/home/presentation/pages/forgot_password_page.dart';
 import '../../features/home/presentation/pages/wishlist_page.dart';
 import '../../features/home/presentation/pages/splash_page.dart';
 import '../../features/home/presentation/pages/category_page.dart';
+import '../../features/home/presentation/pages/products_page.dart';
 import '../../features/admin/presentation/pages/admin_dashboard_page.dart';
 import '../../features/admin/presentation/pages/order_management_page.dart';
 import '../../features/admin/presentation/pages/customers_page.dart';
@@ -34,6 +35,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (context, state) => const HomePage(),
+    ),
+    GoRoute(
+      path: '/products',
+      builder: (context, state) => const ProductsPage(),
     ),
     GoRoute(
       path: '/category/:name',
