@@ -230,7 +230,7 @@ class HomePage extends StatelessWidget {
                   childAspectRatio: 0.7,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                ),
+              ),
                 itemCount: provider.popularProducts.length,
                 itemBuilder: (context, index) {
                   return ProductCard(product: provider.popularProducts[index]);
@@ -258,23 +258,111 @@ class HomePage extends StatelessWidget {
             children: [
               if (!isMobile)
                 Container(
-                  width: 300,
+                  width: 320,
                   height: 450,
+                  clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=300&auto=format&fit=crop'),
-                      fit: BoxFit.cover,
-                    ),
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
                   ),
-                  padding: const EdgeInsets.all(30),
-                  child: const Text(
-                    'Upgrade Your\nLifestyle\nToday',
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.heading),
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Image.network(
+                          'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=400&auto=format&fit=crop',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(35),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Text(
+                                'TRENDING NOW',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
+                            ),
+                            const Spacer(),
+                            const Text(
+                              'Upgrade Your\nLifestyle\nToday',
+                              style: TextStyle(
+                                fontSize: 38,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                height: 1.1,
+                                letterSpacing: -1.2,
+                              ),
+                            ),
+                            const SizedBox(height: 15),
+                            Text(
+                              'Premium furniture and home essentials starting from GH₵ 899.00',
+                              style: TextStyle(
+                                color: Colors.white.withOpacity(0.8),
+                                fontSize: 14,
+                                height: 1.4,
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () => context.push('/products'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  foregroundColor: AppColors.heading,
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                  elevation: 0,
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Shop Collection',
+                                      style: TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
+                                    ),
+                                    SizedBox(width: 8),
+                                    Icon(Icons.arrow_forward_rounded, size: 18),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               const SizedBox(width: 20),
@@ -395,15 +483,7 @@ class HomePage extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style:
                                     const TextStyle(fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 5),
-                            Row(
-                              children: [
-                                const Icon(Icons.star,
-                                    color: AppColors.secondary, size: 14),
-                                Text(' (${p.rating})',
-                                    style: const TextStyle(fontSize: 12)),
-                              ],
-                            ),
+
                             const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

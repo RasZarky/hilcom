@@ -210,6 +210,7 @@ class HomeProvider extends ChangeNotifier {
       price: 1299.00,
       oldPrice: 1599.00,
       videoUrl: 'https://www.tiktok.com/@luxuryfurniture/video/7234567890123456789',
+      dealEndTime: DateTime.now().add(const Duration(days: 2, hours: 5, minutes: 30)),
     ),
     ProductModel(
       title: 'KitchenAid Artisan Series 5-Quart Mixer',
@@ -226,6 +227,7 @@ class HomeProvider extends ChangeNotifier {
       oldPrice: 499.99,
       badge: 'Deal',
       videoUrl: 'https://www.tiktok.com/@kitchenaidusa/video/7211223344556677889',
+      dealEndTime: DateTime.now().add(const Duration(days: 1, hours: 12, minutes: 0)),
     ),
     ProductModel(
       title: 'Yamaha YZF-R1 Superbike 2023',
@@ -241,6 +243,7 @@ class HomeProvider extends ChangeNotifier {
       price: 17599.00,
       oldPrice: 18200.00,
       videoUrl: 'https://www.tiktok.com/@yamahamotoreu/video/7212345678901234567',
+      dealEndTime: DateTime.now().add(const Duration(hours: 8, minutes: 45)),
     ),
   ];
 

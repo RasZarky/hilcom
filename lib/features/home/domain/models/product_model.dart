@@ -9,6 +9,7 @@ class ProductModel {
   final double? oldPrice;
   final String? badge;
   final String? videoUrl; // Optional TikTok or other video URL
+  final DateTime? dealEndTime; // Optional end time for deals
 
   ProductModel({
     required this.title,
@@ -21,5 +22,6 @@ class ProductModel {
     this.oldPrice,
     this.badge,
     this.videoUrl,
+    this.dealEndTime,
   }) : images = images ?? [image];
 }
