@@ -29,7 +29,6 @@ class _ProductTabsState extends State<ProductTabs> {
               children: [
                 _buildTab('Description', 0),
                 _buildTab('Additional info', 1),
-                _buildTab('Reviews (3)', 2),
               ],
             ),
           ),
@@ -85,20 +84,10 @@ class _ProductTabsState extends State<ProductTabs> {
             ),
             const SizedBox(height: 15),
             const Text(
-              'Less than 24 hours delivery within the city. International shipping available with tracking. We take great care in packaging our products to ensure they arrive in perfect condition.',
+              'Less than 24 hours delivery within the city. International shipping available. We take great care in packaging our products to ensure they arrive in perfect condition.',
               style: TextStyle(color: AppColors.textBody, height: 1.6),
             ),
-            const SizedBox(height: 30),
-            const Text(
-              'Suggested Use',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.heading),
-            ),
-            const SizedBox(height: 10),
-            const Text('• Refrigeration not required.', style: TextStyle(color: AppColors.textBody)),
-            const Text('• Store in a cool, dry place.', style: TextStyle(color: AppColors.textBody)),
+
           ],
         );
       default:

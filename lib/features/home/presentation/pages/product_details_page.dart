@@ -13,6 +13,7 @@ import 'package:hilcom/features/home/presentation/widgets/product_details/produc
 import 'package:hilcom/features/home/presentation/widgets/product_details/product_tabs.dart';
 import 'package:hilcom/features/home/presentation/widgets/product_details/product_sidebar.dart';
 import 'package:hilcom/features/home/presentation/widgets/product_details/product_video_section.dart';
+import 'package:hilcom/core/theme/app_colors.dart';
 
 class ProductDetailsPage extends StatelessWidget {
   final ProductModel product;
@@ -25,19 +26,19 @@ class ProductDetailsPage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
+      backgroundColor: const Color(0xFFFBFBFB),
       appBar: isMobile ? const MobileAppBar() : const WebHeader(),
       drawer: isMobile ? const MobileDrawer() : null,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Add spacing for the floating app bar
             SizedBox(height: isMobile ? 110 : 120),
             if (!isMobile) const WebSecondaryHeader(currentPage: 'Shop'),
             Breadcrumb(currentPage: product.title, isMobile: isMobile),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: isMobile ? 15 : 50,
-                vertical: 20,
+                vertical: 30,
               ),
               child: isMobile 
                 ? _buildMobileLayout(context)
@@ -63,26 +64,33 @@ class ProductDetailsPage extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: ProductImageSection(image: product.image, isMobile: false)),
-                  const SizedBox(width: 40),
-                  Expanded(child: ProductInfoSection(product: product, isMobile: false)),
+                  Expanded(
+                    flex: 1,
+                    child: ProductImageSection(
+                      images: product.images, 
+                      isMobile: false
+                    ),
+                  ),
+                  const SizedBox(width: 50),
+                  Expanded(
+                    flex: 1,
+                    child: ProductInfoSection(
+                      product: product, 
+                      isMobile: false
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: 60),
               if (product.videoUrl != null) ...[
                 ProductVideoSection(videoUrl: product.videoUrl!, isMobile: false),
-                const SizedBox(height: 50),
+                const SizedBox(height: 60),
               ],
               const ProductTabs(isMobile: false),
-              const SizedBox(height: 50),
+              const SizedBox(height: 60),
               _buildRelatedProducts(context, false),
             ],
           ),
-        ),
-        const SizedBox(width: 30),
-        const Expanded(
-          flex: 1,
-          child: ProductSidebar(),
         ),
       ],
     );
@@ -92,16 +100,16 @@ class ProductDetailsPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ProductImageSection(image: product.image, isMobile: true),
+        ProductImageSection(images: product.images, isMobile: true),
         const SizedBox(height: 30),
         ProductInfoSection(product: product, isMobile: true),
-        const SizedBox(height: 40),
+        const SizedBox(height: 50),
         if (product.videoUrl != null) ...[
           ProductVideoSection(videoUrl: product.videoUrl!, isMobile: true),
-          const SizedBox(height: 40),
+          const SizedBox(height: 50),
         ],
         const ProductTabs(isMobile: true),
-        const SizedBox(height: 40),
+        const SizedBox(height: 50),
         _buildRelatedProducts(context, true),
       ],
     );
@@ -111,23 +119,28 @@ class ProductDetailsPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Related products', 
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        Row(
+          children: [
+            const Text(
+              'Related products', 
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: AppColors.heading),
+            ),
+            const SizedBox(width: 15),
+            Expanded(child: Divider(color: AppColors.primary.withOpacity(0.1), thickness: 2)),
+          ],
         ),
-        const SizedBox(height: 10),
-        Container(height: 2, width: 80, color: const Color(0xFF3BB77E).withValues(alpha: 0.3)),
         const SizedBox(height: 30),
         isMobile
             ? SizedBox(
                 height: 420,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
                   itemCount: 4,
                   itemBuilder: (context, index) {
                     return Container(
                       width: 280,
-                      margin: const EdgeInsets.only(right: 15),
+                      margin: const EdgeInsets.only(right: 20),
                       child: _getRelatedProduct(index),
                     );
                   },
@@ -138,7 +151,7 @@ class ProductDetailsPage extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 4,
-                  childAspectRatio: 0.7,
+                  childAspectRatio: 0.65,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                 ),
@@ -158,30 +171,28 @@ class ProductDetailsPage extends StatelessWidget {
       'HomeSpeak 12L-04 Buds',
       'Digital Camera 4K 2023'
     ];
-    final images = [
+    final mainImages = [
       'https://picsum.photos/id/1/400/400',
       'https://picsum.photos/id/2/400/400',
       'https://picsum.photos/id/3/400/400',
       'https://picsum.photos/id/4/400/400'
     ];
-    final videos = [
-      'https://www.tiktok.com/@apple/video/7277889912345678901',
-      'https://www.tiktok.com/@bose/video/7123456789012345678',
-      'https://www.tiktok.com/@sony/video/7331234567890123456',
-      'https://www.tiktok.com/@canon/video/7256789012345678901'
-    ];
-
+    
     return ProductCard(
       product: ProductModel(
         title: titles[index],
         category: 'Electronics',
-        image: images[index],
+        image: mainImages[index],
+        images: [
+          mainImages[index],
+          'https://picsum.photos/id/${index + 10}/400/400',
+          'https://picsum.photos/id/${index + 20}/400/400',
+        ],
         rating: 4.5,
-        brand: 'HilcomFood',
+        brand: 'HilcomTech',
         price: 25.0 + (index * 10),
         oldPrice: 35.0 + (index * 10),
         badge: index % 2 == 0 ? 'New' : 'Hot',
-        videoUrl: videos[index],
       ),
     );
   }
